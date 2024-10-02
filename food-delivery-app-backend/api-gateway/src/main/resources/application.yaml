@@ -1,0 +1,53 @@
+
+# General config
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: ecommerce-api-gateway
+
+# Gateway config
+spring.cloud:
+  gateway:
+    globalcors:
+      cors-configurations:
+        '[/**]':
+          allowed-origins:
+           - "*"
+          allowed-headers:
+           - "*"
+          allowed-methods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
+    default-filters:
+      - TokenRelay=
+    routes:
+      - id: order-command
+        uri: ${ORDER_COMMAND_HOST:http://localhost:8181}
+        predicates:
+          - Path=/api/v1/orders/**
+      - id: any
+        uri: http://localhost:8181
+        predicates:
+          - Path=/**
+
+
+# Security config
+spring.security.oauth2:
+  resourceserver:
+    jwt:
+      jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/demo/protocol/openid-connect/certs}
+  client:
+    provider:
+      keycloak:
+        issuer-uri: ${ISSUER_URI:http://localhost:9090/realms/demo}
+    registration:
+      spring-with-test-scope:
+        provider: keycloak
+        client-id: spring-with-test-scope
+        client-secret: ${CLIENT_SECRET:Jq1l8eoeUOrTBETum6bCnIckSTvO0U7Q}
+        authorization-grant-type: authorization_code
+        scope: openid

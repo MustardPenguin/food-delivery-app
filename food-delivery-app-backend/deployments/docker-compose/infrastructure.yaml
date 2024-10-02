@@ -1,0 +1,35 @@
+
+version: '3.7'
+
+services:
+  postgres:
+    image: debezium/postgres:16
+    platform: linux/amd64
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: admin
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "max_replication_slots=10"
+      - "-c"
+      - "max_wal_senders=10"
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    platform: linux/amd64
+    depends_on:
+      - postgres
+    ports:
+      - "9090:8080"
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
+      KC_DB: "postgres"
+      KC_DB_USERNAME: user
+      KC_DB_PASSWORD: admin
