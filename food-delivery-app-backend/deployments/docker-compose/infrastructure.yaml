@@ -33,3 +33,101 @@ services:
       KC_DB: "postgres"
       KC_DB_USERNAME: user
       KC_DB_PASSWORD: admin
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:latest
+    platform: linux/amd64
+    ports:
+      - "19092:19092"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: CONTROLLER://kafka-broker-1:9093,BROKER://kafka-broker-1:9092
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-1:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,BROKER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:9093,2@kafka-broker-2:9093,3@kafka-broker-3:9093'
+      CLUSTER_ID: f1p7ULGbT_qGDINRRLoz7g
+  kafka-broker-2:
+    image: confluentinc/cp-kafka:latest
+    platform: linux/amd64
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_NODE_ID: 2
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: CONTROLLER://kafka-broker-2:9093,BROKER://kafka-broker-2:9092
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-2:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:9093,2@kafka-broker-2:9093,3@kafka-broker-3:9093'
+      CLUSTER_ID: f1p7ULGbT_qGDINRRLoz7g
+  kafka-broker-3:
+    image: confluentinc/cp-kafka:latest
+    platform: linux/amd64
+    ports:
+      - "39092:39092"
+    environment:
+      KAFKA_NODE_ID: 3
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: CONTROLLER://kafka-broker-3:9093,BROKER://kafka-broker-3:9092
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-broker-3:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:9093,2@kafka-broker-2:9093,3@kafka-broker-3:9093'
+      CLUSTER_ID: f1p7ULGbT_qGDINRRLoz7g
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    platform: linux/amd64
+    ports:
+      - "9000:8080"
+    depends_on:
+      - kafka-broker-1
+      - kafka-broker-2
+      - kafka-broker-3
+      - apicurio
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+  debezium:
+    image: debezium/connect:2.5
+    platform: linux/amd64
+    ports:
+      - "8083:8083"
+    environment:
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: "connect-config"
+      OFFSET_STORAGE_TOPIC: "connect-offsets"
+      STATUS_STORAGE_TOPIC: "connect-status"
+      BOOTSTRAP_SERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
+      LOGGING_LEVEL: "DEBUG"
+      CONNECT_SCHEMA_NAME_ADJUSTMENT_MODE: avro
+      ENABLE_APICURIO_CONVERTERS: "true"
+      KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      VALUE_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      CONNECT_KEY_CONVERTER: io.apicurio.registry.utils.converter.AvroConverter
+      CONNECT_KEY_CONVERTER_APICURIO_REGISTRY_URL: http://apicurio:8080/apis/registry/v3
+      CONNECT_VALUE_CONVERTER_APICURIO_REGISTRY_URL: http://apicurio:8080/apis/registry/v3
+  apicurio:
+    image: apicurio/apicurio-registry-jpa:latest
+    platform: linux/amd64
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    environment:
+#      QUARKUS_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres&currentSchema=schema-registry
+      QUARKUS_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      QUARKUS_DATASOURCE_USERNAME: user
+      QUARKUS_DATASOURCE_PASSWORD: admin
+  redis:
+    image: redis:7.2
+    platform: linux/amd64
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: admin

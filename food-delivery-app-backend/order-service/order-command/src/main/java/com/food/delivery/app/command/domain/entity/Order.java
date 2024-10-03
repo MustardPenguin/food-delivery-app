@@ -1,10 +1,7 @@
-package com.food.delivery.app.command.shared.entity;
+package com.food.delivery.app.command.domain.entity;
 
 
-import com.food.delivery.app.command.shared.repository.order.OrderItemEntity;
-import com.food.delivery.app.command.shared.valueobjects.OrderStatus;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
+import com.food.delivery.app.command.domain.valueobjects.OrderStatus;
 import lombok.Builder;
 import lombok.Data;
 

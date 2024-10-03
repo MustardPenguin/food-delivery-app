@@ -1,6 +1,6 @@
 package com.food.delivery.app.command.shared.repository.order;
 
-import com.food.delivery.app.command.shared.entity.OrderItem;
+import com.food.delivery.app.command.domain.valueobjects.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,4 +27,5 @@ public class OrderEntity {
     List<OrderItemEntity> orderItems;
     private String address;
     private LocalDateTime orderedAt;
+    private OrderStatus orderStatus;
 }

@@ -1,5 +1,6 @@
 package com.food.delivery.app.command.features.create_order.v1.endpoints;
 
+import com.food.delivery.app.command.domain.entity.Order;
 import com.food.delivery.app.command.features.create_order.v1.command.CreateOrderCommandHandler;
 import com.food.delivery.app.command.features.create_order.v1.dtos.CreateOrderCommand;
 import com.food.delivery.app.command.features.create_order.v1.dtos.CreateOrderResponse;
@@ -38,7 +39,7 @@ public class CreateOrderEndpoint {
         createOrderCommand.setCustomerId(customerId);
         createOrderCommand.setOrderedAt(dateTimeUtil.getCurrentDateTime());
 
-        CreateOrderResponse createOrderResponse = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand);
-        return ResponseEntity.ok(createOrderResponse);
+        Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand);
+        return ResponseEntity.ok(null);
     }
 }

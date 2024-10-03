@@ -1,4 +1,4 @@
-package com.food.delivery.app.command.shared.valueobjects;
+package com.food.delivery.app.command.domain.valueobjects;
 
 public enum OrderStatus {
     PENDING_PAYMENT, PAID,

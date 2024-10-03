@@ -1,4 +1,4 @@
-package com.food.delivery.app.command.shared.entity;
+package com.food.delivery.app.command.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

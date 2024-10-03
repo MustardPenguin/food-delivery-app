@@ -1,6 +1,6 @@
 package com.food.delivery.app.command.features.create_order.v1.dtos;
 
-import com.food.delivery.app.command.shared.entity.OrderItem;
+import com.food.delivery.app.command.domain.entity.OrderItem;
 import lombok.Builder;
 import lombok.Getter;
 
