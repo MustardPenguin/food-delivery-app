@@ -39,15 +39,15 @@ spring.cloud:
 spring.security.oauth2:
   resourceserver:
     jwt:
-      jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/demo/protocol/openid-connect/certs}
+      jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/food-delivery-app/protocol/openid-connect/certs}
   client:
     provider:
       keycloak:
-        issuer-uri: ${ISSUER_URI:http://localhost:9090/realms/demo}
+        issuer-uri: ${ISSUER_URI:http://localhost:9090/realms/food-delivery-app}
     registration:
-      spring-with-test-scope:
+      api-gateway:
         provider: keycloak
-        client-id: spring-with-test-scope
-        client-secret: ${CLIENT_SECRET:Jq1l8eoeUOrTBETum6bCnIckSTvO0U7Q}
+        client-id: api-gateway
+        client-secret: ${CLIENT_SECRET:bOGL4LdWXsQMKvU0obODwFTiua66kKf7}
         authorization-grant-type: authorization_code
         scope: openid

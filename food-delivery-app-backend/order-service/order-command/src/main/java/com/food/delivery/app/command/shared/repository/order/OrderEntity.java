@@ -27,5 +27,6 @@ public class OrderEntity {
     List<OrderItemEntity> orderItems;
     private String address;
     private LocalDateTime orderedAt;
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 }

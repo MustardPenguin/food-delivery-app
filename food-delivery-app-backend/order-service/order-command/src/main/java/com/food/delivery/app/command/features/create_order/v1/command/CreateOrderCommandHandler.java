@@ -47,8 +47,7 @@ public class CreateOrderCommandHandler {
 
     @Transactional
     public Order handleCreateOrderCommand(CreateOrderCommand createOrderCommand) {
-        Order order = orderCommandMapper.commandToOrder(createOrderCommand);
-        orderDomainService.validateOrder(order);
+        Order order = orderDomainService.validateOrder(orderCommandMapper.commandToOrder(createOrderCommand));
 
         String payload = objectMapperUtil.convertObjectToJson(order);
 

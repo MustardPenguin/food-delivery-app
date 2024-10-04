@@ -17,7 +17,6 @@ public class OrderCommandMapper {
                 .orderedAt(createOrderCommand.getOrderedAt())
                 .address(createOrderCommand.getAddress())
                 .orderStatus(OrderStatus.PENDING_PAYMENT)
-                .orderId(UUID.randomUUID())
                 .build();
     }
 }

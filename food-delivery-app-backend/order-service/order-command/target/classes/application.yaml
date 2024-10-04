@@ -29,4 +29,4 @@ spring.security:
   oauth2:
     resourceserver:
       jwt:
-        jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/demo/protocol/openid-connect/certs}
+        jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/food-delivery-app/protocol/openid-connect/certs}
