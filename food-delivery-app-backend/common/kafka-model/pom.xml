@@ -37,7 +37,7 @@
                         </goals>
                         <configuration>
                             <sourceDirectory>src/main/resources/avro</sourceDirectory>
-                            <outputDirectory>src/main/java/com/food/delivery/app/kafka/model/avro</outputDirectory>
+                            <outputDirectory>src/main/java/com/food/delivery/app/common/kafka/model/avro</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
