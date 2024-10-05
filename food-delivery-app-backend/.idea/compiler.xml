@@ -11,11 +11,13 @@
         <module name="utility" />
         <module name="exception-handler" />
         <module name="order-command" />
+        <module name="kafka-model" />
         <module name="order-query" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="domain" target="17" />
+      <module name="kafka-models" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -24,6 +26,8 @@
       <module name="common" options="" />
       <module name="domain" options="-parameters" />
       <module name="exception-handler" options="-parameters" />
+      <module name="kafka-model" options="-parameters" />
+      <module name="kafka-models" options="-parameters" />
       <module name="order-command" options="-parameters" />
       <module name="order-query" options="-parameters" />
       <module name="order-service" options="" />

@@ -34,7 +34,6 @@ spring.cloud:
         predicates:
           - Path=/**
 
-
 # Security config
 spring.security.oauth2:
   resourceserver:
@@ -48,6 +47,6 @@ spring.security.oauth2:
       api-gateway:
         provider: keycloak
         client-id: api-gateway
-        client-secret: ${CLIENT_SECRET:bOGL4LdWXsQMKvU0obODwFTiua66kKf7}
+        client-secret: ${CLIENT_SECRET:OivN6x6yHAKF95JMjtkduHr4KsolpgZm}
         authorization-grant-type: authorization_code
         scope: openid

@@ -36,11 +36,6 @@ order_created_json=$(jq -n \
       "tombstones.on.delete" : "false",
       "slot.name": "order_created_slot",
       "plugin.name": "pgoutput",
-      "value.converter": "io.apicurio.registry.utils.converter.AvroConverter",
-      "key.converter.apicurio.registry.auto-register": "true",
-      "key.converter": "io.apicurio.registry.utils.converter.AvroConverter",
-      "value.converter.apicurio.registry.url": $apicurio_api,
-      "key.converter.apicurio.registry.url": $apicurio_api,
     }
   }')
 
