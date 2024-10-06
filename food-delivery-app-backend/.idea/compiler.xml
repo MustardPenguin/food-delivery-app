@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
-        <module name="utility" />
         <module name="exception-handler" />
         <module name="order-command" />
         <module name="kafka-model" />
         <module name="order-query" />
+        <module name="kafka-consumer" />
+        <module name="api-gateway" />
+        <module name="utility" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,6 +27,7 @@
       <module name="common" options="" />
       <module name="domain" options="-parameters" />
       <module name="exception-handler" options="-parameters" />
+      <module name="kafka-consumer" options="-parameters" />
       <module name="kafka-model" options="-parameters" />
       <module name="kafka-models" options="-parameters" />
       <module name="order-command" options="-parameters" />

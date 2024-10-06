@@ -1,6 +1,7 @@
 package com.food.delivery.app.order.command.features.create_order.v1.dtos;
 
 import com.food.delivery.app.order.command.domain.entity.OrderItem;
+import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,4 +19,5 @@ public class CreateOrderResponse {
     List<OrderItem> orderItems;
     private String address;
     private LocalDateTime orderedAt;
+    private OrderStatus orderStatus;
 }

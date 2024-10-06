@@ -15,5 +15,6 @@
         <module>exception-handler</module>
         <module>utility</module>
         <module>kafka-model</module>
+        <module>kafka-consumer</module>
     </modules>
 </project>

@@ -5,6 +5,7 @@ import com.food.delivery.app.order.command.features.create_order.v1.command.Crea
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderCommand;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderResponse;
 import com.food.delivery.app.common.utility.datetime.DateTimeUtil;
+import com.food.delivery.app.order.command.features.create_order.v1.mapper.OrderCommandMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -21,10 +22,14 @@ import java.util.UUID;
 public class CreateOrderEndpoint {
 
     private final CreateOrderCommandHandler createOrderCommandHandler;
+    private final OrderCommandMapper orderCommandMapper;
     private final DateTimeUtil dateTimeUtil;
 
-    public CreateOrderEndpoint(CreateOrderCommandHandler createOrderCommandHandler, DateTimeUtil dateTimeUtil) {
+    public CreateOrderEndpoint(CreateOrderCommandHandler createOrderCommandHandler,
+                               OrderCommandMapper orderCommandMapper,
+                               DateTimeUtil dateTimeUtil) {
         this.createOrderCommandHandler = createOrderCommandHandler;
+        this.orderCommandMapper = orderCommandMapper;
         this.dateTimeUtil = dateTimeUtil;
     }
 
@@ -40,6 +45,6 @@ public class CreateOrderEndpoint {
         createOrderCommand.setOrderedAt(dateTimeUtil.getCurrentDateTime());
 
         Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(orderCommandMapper.orderToResponse(order));
     }
 }
