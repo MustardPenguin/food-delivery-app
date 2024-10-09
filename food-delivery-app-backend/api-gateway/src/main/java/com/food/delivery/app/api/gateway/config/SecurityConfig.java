@@ -1,4 +1,4 @@
-package com.ecommerce.api.gateway.config;
+package com.food.delivery.app.api.gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

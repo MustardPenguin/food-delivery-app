@@ -5,7 +5,17 @@ server:
 
 spring:
   application:
-    name: ecommerce-api-gateway
+    name: food-delivery-app-api-gateway
+
+logging:
+  level:
+    org:
+      springframework: ${LOGGING_LEVEL:INFO}
+
+spring.data.redis:
+  host: ${REDIS_HOST:localhost}
+  port: ${REDIS_PORT:6379}
+  password: ${REDIS_PASSWORD:admin}
 
 # Gateway config
 spring.cloud:
@@ -29,10 +39,26 @@ spring.cloud:
         uri: ${ORDER_COMMAND_HOST:http://localhost:8181}
         predicates:
           - Path=/api/v1/orders/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/order
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 2
+              redis-rate-limiter.burstCapacity: 4
+              redis-rate-limiter.requestedTokens: 1
+              key-resolver: "#{@KeyResolverConfig}"
       - id: any
         uri: http://localhost:8181
         predicates:
           - Path=/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/test
 
 # Security config
 spring.security.oauth2:
@@ -47,6 +73,6 @@ spring.security.oauth2:
       api-gateway:
         provider: keycloak
         client-id: api-gateway
-        client-secret: ${CLIENT_SECRET:eCdUmIOqeOZ340git9itFAXmwBfRDd31}
+        client-secret: ${CLIENT_SECRET:fyG8xrAtuc5O9l7fRS7weZngRrrSZ9lI}
         authorization-grant-type: authorization_code
         scope: openid

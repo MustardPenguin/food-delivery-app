@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="exception-handler" />
         <module name="order-command" />
+        <module name="restaurant-service" />
         <module name="kafka-model" />
         <module name="order-query" />
         <module name="kafka-consumer" />
@@ -17,6 +18,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="config-server" target="17" />
       <module name="domain" target="17" />
       <module name="kafka-models" target="17" />
     </bytecodeTargetLevel>
@@ -25,6 +27,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="common" options="" />
+      <module name="config-server" options="-parameters" />
       <module name="domain" options="-parameters" />
       <module name="exception-handler" options="-parameters" />
       <module name="kafka-consumer" options="-parameters" />
@@ -33,6 +36,7 @@
       <module name="order-command" options="-parameters" />
       <module name="order-query" options="-parameters" />
       <module name="order-service" options="" />
+      <module name="restaurant-service" options="-parameters" />
       <module name="utility" options="-parameters" />
     </option>
   </component>

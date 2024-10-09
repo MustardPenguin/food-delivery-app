@@ -12,10 +12,13 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testcontainers.version>1.19.8</testcontainers.version>
+        <testcontainers.version>1.20.0</testcontainers.version>
 
         <kafka.avro.serializer.version>7.6.0</kafka.avro.serializer.version>
         <avro.version>1.11.3</avro.version>
+
+        <spring.cloud.dependencies.version>2023.0.3</spring.cloud.dependencies.version>
+        <spring.cloud.gateway.version>4.0.6</spring.cloud.gateway.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -24,6 +27,7 @@
         <module>api-gateway</module>
         <module>order-service</module>
         <module>common</module>
+        <module>restaurant-service</module>
     </modules>
 
     <parent>
@@ -68,7 +72,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
-                <version>4.0.6</version>
+                <version>${spring.cloud.gateway.version}</version>
             </dependency>
 
             <dependency>
