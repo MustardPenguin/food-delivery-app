@@ -16,5 +16,6 @@
         <module>utility</module>
         <module>kafka-model</module>
         <module>kafka-consumer</module>
+        <module>annotation</module>
     </modules>
 </project>

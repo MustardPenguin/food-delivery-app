@@ -51,6 +51,11 @@
         <dependencies>
             <dependency>
                 <groupId>com.food.delivery.app</groupId>
+                <artifactId>annotation</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.food.delivery.app</groupId>
                 <artifactId>exception-handler</artifactId>
                 <version>${project.version}</version>
             </dependency>
