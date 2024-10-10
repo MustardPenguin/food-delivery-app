@@ -88,6 +88,6 @@ spring.security.oauth2:
       api-gateway:
         provider: keycloak
         client-id: api-gateway
-        client-secret: ${CLIENT_SECRET:fyG8xrAtuc5O9l7fRS7weZngRrrSZ9lI}
+        client-secret: ${CLIENT_SECRET:LftSlWS6xrrOJlW5bACCdtM1nc8s4L97}
         authorization-grant-type: authorization_code
         scope: openid
