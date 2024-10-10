@@ -2,9 +2,11 @@ package com.food.delivery.app.order.command.domain.entity;
 
 
 import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
+import com.food.delivery.app.order.command.shared.exceptions.OrderException;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -21,4 +23,24 @@ public class Order {
     private String address;
     private LocalDateTime orderedAt;
     private OrderStatus orderStatus;
+    private BigDecimal totalPrice;
+
+    public void validateOrder() {
+        if(this.getOrderItems().isEmpty()) {
+            throw new OrderException("Order has no items! Please add something to your order.");
+        }
+        BigDecimal total = calculateTotalPrice();
+        if(total.compareTo(BigDecimal.ZERO) < 0) {
+            throw new OrderException("Order total price is invalid! Price: " + total);
+        }
+    }
+
+    public BigDecimal calculateTotalPrice() {
+        BigDecimal total = new BigDecimal("0");
+        for(OrderItem item : orderItems) {
+            BigDecimal quantity = new BigDecimal(item.getQuantity());
+            total = total.add(item.getPrice().multiply(quantity));
+        }
+        return total;
+    }
 }

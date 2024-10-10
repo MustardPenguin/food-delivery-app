@@ -33,13 +33,13 @@ public class BaseTest {
     }
 
     @BeforeAll
-    public static void init() {
+    static void beforeAll() {
         keycloak.start();
         redis.start();
     }
 
     @AfterAll
-    public static void completed() {
+    static void afterAll() {
         keycloak.stop();
         redis.stop();
     }

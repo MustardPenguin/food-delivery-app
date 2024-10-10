@@ -44,10 +44,12 @@ public class CreateOrderCommandHandler {
 
     @Transactional
     public Order handleCreateOrderCommand(CreateOrderCommand createOrderCommand) {
+
+        // TODO: Get products from restaurants via API to get product availability and prices
         Order order = orderDomainService.validateOrder(orderCommandMapper.commandToOrder(createOrderCommand));
 
-        String payload = objectMapperUtil.convertObjectToJson(order);
 
+        String payload = objectMapperUtil.convertObjectToJson(order);
         orderCreatedEventJpaRepository.save(createOrderEvent(payload));
         orderJpaRepository.save(orderMapper.orderToEntity(order));
 

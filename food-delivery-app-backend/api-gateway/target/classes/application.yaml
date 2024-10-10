@@ -50,6 +50,21 @@ spring.cloud:
               redis-rate-limiter.burstCapacity: 4
               redis-rate-limiter.requestedTokens: 1
               key-resolver: "#{@KeyResolverConfig}"
+      - id: restaurant-service
+        uri: ${RESTAURANT_SERVICE_HOST:http://localhost:8183}
+        predicates:
+          - Path=/api/v1/restaurant/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/restaurant
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 2
+              redis-rate-limiter.burstCapacity: 4
+              redis-rate-limiter.requestedTokens: 1
+              key-resolver: "#{@KeyResolverConfig}"
       - id: any
         uri: http://localhost:8181
         predicates:
