@@ -14,6 +14,7 @@
         <module name="kafka-model" />
         <module name="order-query" />
         <module name="kafka-consumer" />
+        <module name="domain" />
         <module name="api-gateway" />
         <module name="utility" />
       </profile>
@@ -21,7 +22,6 @@
     <bytecodeTargetLevel>
       <module name="annotations" target="17" />
       <module name="config-server" target="17" />
-      <module name="domain" target="17" />
       <module name="kafka-models" target="17" />
     </bytecodeTargetLevel>
   </component>

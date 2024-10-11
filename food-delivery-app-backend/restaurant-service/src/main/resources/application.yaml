@@ -19,11 +19,11 @@ spring.datasource:
   password: ${DATABASE_PASSWORD:admin}
   driver-class-name: org.postgresql.Driver
 
-#spring.sql:
-#  init:
-#    schema-locations: classpath:init-schema.sql
-#    platform: postgres
-#    mode: always
+spring.sql:
+  init:
+    schema-locations: classpath:init-schema.sql
+    platform: postgres
+    mode: always
 
 spring.security:
   oauth2:
