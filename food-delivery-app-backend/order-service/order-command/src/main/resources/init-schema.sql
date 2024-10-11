@@ -3,6 +3,8 @@ DROP SCHEMA IF EXISTS order_command CASCADE;
 
 CREATE SCHEMA order_command;
 
+SET search_path TO order_command;
+
 DROP TYPE IF EXISTS order_status;
 CREATE TYPE order_status AS ENUM('PENDING_PAYMENT', 'PAID');
 
