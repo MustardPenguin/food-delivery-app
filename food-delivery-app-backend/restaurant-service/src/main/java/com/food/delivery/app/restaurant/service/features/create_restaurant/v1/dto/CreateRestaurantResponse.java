@@ -11,6 +11,7 @@ import java.util.UUID;
 public class CreateRestaurantResponse {
 
     private UUID restaurantId;
+    private UUID ownerId;
     private String restaurantName;
     private String address;
 }

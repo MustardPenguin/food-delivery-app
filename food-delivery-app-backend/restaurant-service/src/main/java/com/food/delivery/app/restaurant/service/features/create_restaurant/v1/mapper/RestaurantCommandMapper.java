@@ -22,6 +22,7 @@ public class RestaurantCommandMapper {
     public CreateRestaurantResponse restaurantToResponse(Restaurant restaurant) {
         return CreateRestaurantResponse.builder()
                 .restaurantId(restaurant.getRestaurantId())
+                .ownerId(restaurant.getOwnerId())
                 .address(restaurant.getAddress())
                 .restaurantName(restaurant.getRestaurantName())
                 .build();

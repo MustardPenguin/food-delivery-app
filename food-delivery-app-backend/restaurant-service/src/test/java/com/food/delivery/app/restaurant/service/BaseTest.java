@@ -10,7 +10,7 @@ public class BaseTest {
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withUrlParam("stringtype", "unspecified")
-            .withUrlParam("currentSchema", "order-command")
+            .withUrlParam("currentSchema", "restaurant")
             .withInitScript("init-schema.sql")
             .withReuse(true);
 
