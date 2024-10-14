@@ -10,11 +10,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestaurantProduct {
+public class Product {
 
     private UUID restaurantId;
     private UUID productId;
-    private String productName;
+    private String name;
+    private String description;
     private BigDecimal price;
     private boolean available;
 }

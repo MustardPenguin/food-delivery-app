@@ -1,9 +1,9 @@
 package com.food.delivery.app.restaurant.service.shared.mapper;
 
-import com.food.delivery.app.common.domain.entity.RestaurantProduct;
+import com.food.delivery.app.common.domain.entity.Product;
 import com.food.delivery.app.restaurant.service.domain.entity.Restaurant;
+import com.food.delivery.app.restaurant.service.shared.repository.product.ProductEntity;
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantEntity;
-import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantProductEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -11,15 +11,22 @@ import java.util.List;
 @Component
 public class RestaurantMapper {
 
+    private final ProductMapper productMapper;
+
+    public RestaurantMapper(ProductMapper productMapper) {
+        this.productMapper = productMapper;
+    }
+
     public RestaurantEntity restaurantToEntity(Restaurant restaurant) {
         RestaurantEntity restaurantEntity = RestaurantEntity.builder()
                 .restaurantId(restaurant.getRestaurantId())
-                .restaurantName(restaurant.getRestaurantName())
+                .name(restaurant.getName())
                 .address(restaurant.getAddress())
                 .ownerId(restaurant.getOwnerId())
+                .active(restaurant.isActive())
                 .build();
 
-        restaurantEntity.setRestaurantProducts(restaurantProductsToEntities(restaurant.getRestaurantProducts(), restaurantEntity));
+        restaurantEntity.setProducts(productMapper.productsToEntities(restaurant.getProducts(), restaurantEntity));
 
         return restaurantEntity;
     }
@@ -27,32 +34,11 @@ public class RestaurantMapper {
     public Restaurant restaurantFromEntity(RestaurantEntity restaurant) {
         return Restaurant.builder()
                 .restaurantId(restaurant.getRestaurantId())
-                .restaurantName(restaurant.getRestaurantName())
+                .name(restaurant.getName())
                 .address(restaurant.getAddress())
                 .ownerId(restaurant.getOwnerId())
-                .restaurantProducts(restaurantProductsFromEntities(restaurant.getRestaurantProducts()))
+                .active(restaurant.isActive())
+                .products(productMapper.productsFromEntities(restaurant.getProducts()))
                 .build();
-    }
-
-    public List<RestaurantProductEntity> restaurantProductsToEntities(List<RestaurantProduct> products, RestaurantEntity restaurant) {
-        return products.stream().map(product ->
-                RestaurantProductEntity.builder()
-                        .productId(product.getProductId())
-                        .restaurant(restaurant)
-                        .productName(product.getProductName())
-                        .price(product.getPrice())
-                        .available(product.isAvailable())
-                        .build()).toList();
-    }
-
-    public List<RestaurantProduct> restaurantProductsFromEntities(List<RestaurantProductEntity> products) {
-        return products.stream().map(product ->
-                RestaurantProduct.builder()
-                        .restaurantId(product.getRestaurant().getRestaurantId())
-                        .productId(product.getProductId())
-                        .productName(product.getProductName())
-                        .price(product.getPrice())
-                        .available(product.isAvailable())
-                        .build()).toList();
     }
 }

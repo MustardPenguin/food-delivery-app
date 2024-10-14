@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/restaurant")
+@RequestMapping("/api/v1/restaurants")
 public class CreateRestaurantEndpoint {
 
     private final CreateRestaurantCommandHandler createRestaurantCommandHandler;

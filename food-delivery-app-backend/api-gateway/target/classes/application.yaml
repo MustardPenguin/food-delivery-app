@@ -53,12 +53,12 @@ spring.cloud:
       - id: restaurant-service
         uri: ${RESTAURANT_SERVICE_HOST:http://localhost:8183}
         predicates:
-          - Path=/api/v1/restaurant/**
+          - Path=/api/v1/restaurants/**
         filters:
           - name: CircuitBreaker
             args:
               name: CircuitBreakerInstance
-              fallbackUri: forward:/fallback/restaurant
+              fallbackUri: forward:/fallback/restaurants
           - name: RequestRateLimiter
             args:
               redis-rate-limiter.replenishRate: 2

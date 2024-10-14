@@ -12,8 +12,8 @@ public class RestaurantCommandMapper {
 
     public Restaurant commandToRestaurant(CreateRestaurantCommand createRestaurantCommand) {
         return Restaurant.builder()
-                .restaurantName(createRestaurantCommand.getRestaurantName())
-                .restaurantProducts(new ArrayList<>())
+                .name(createRestaurantCommand.getRestaurantName())
+                .products(new ArrayList<>())
                 .address(createRestaurantCommand.getAddress())
                 .ownerId(createRestaurantCommand.getOwnerId())
                 .build();
@@ -24,7 +24,7 @@ public class RestaurantCommandMapper {
                 .restaurantId(restaurant.getRestaurantId())
                 .ownerId(restaurant.getOwnerId())
                 .address(restaurant.getAddress())
-                .restaurantName(restaurant.getRestaurantName())
+                .restaurantName(restaurant.getName())
                 .build();
     }
 }

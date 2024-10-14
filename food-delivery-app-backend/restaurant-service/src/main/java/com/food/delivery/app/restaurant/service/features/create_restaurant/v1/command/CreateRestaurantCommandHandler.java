@@ -31,6 +31,7 @@ public class CreateRestaurantCommandHandler {
     public Restaurant handleCreateRestaurantCommand(CreateRestaurantCommand createRestaurantCommand) {
         Restaurant restaurant = restaurantCommandMapper.commandToRestaurant(createRestaurantCommand);
         restaurant.setRestaurantId(UUID.randomUUID());
+        restaurant.setActive(false);
 
         restaurantJpaRepository.save(restaurantMapper.restaurantToEntity(restaurant));
 
