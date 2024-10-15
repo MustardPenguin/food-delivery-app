@@ -1,4 +1,5 @@
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/config/RestaurantExceptionHandler.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/get_restaurant_products/v1/grpc/ProductServiceImpl.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/repository/product/ProductEntity.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/mapper/ProductMapper.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/create_product/v1/endpoints/CreateProductEndpoint.java

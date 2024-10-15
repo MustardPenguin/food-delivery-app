@@ -18,5 +18,6 @@
         <module>kafka-consumer</module>
         <module>annotation</module>
         <module>domain</module>
+        <module>proto</module>
     </modules>
 </project>

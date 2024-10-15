@@ -9,12 +9,14 @@ import com.food.delivery.app.restaurant.service.shared.repository.restaurant.Res
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantJpaRepository;
 import com.food.delivery.app.restaurant.service.shared.util.SecurityContextUtil;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 import java.util.UUID;

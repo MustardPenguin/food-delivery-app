@@ -2,6 +2,10 @@
 server:
   port: ${PORT:8183}
 
+grpc:
+  server:
+    port: ${GRPC_PORT:8184}
+
 logging:
   level:
     org:
