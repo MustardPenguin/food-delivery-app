@@ -1,0 +1,3 @@
+com/food/delivery/app/order/query/repository/OrderEntity.class
+com/food/delivery/app/order/query/OrderQueryApplication.class
+com/food/delivery/app/order/query/message/OrderCreatedEventKafkaListener.class

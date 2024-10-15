@@ -1,0 +1,4 @@
+com/food/delivery/app/api/gateway/controller/FallbackController.class
+com/food/delivery/app/api/gateway/config/SecurityConfig.class
+com/food/delivery/app/api/gateway/ApiGatewayApplication.class
+com/food/delivery/app/api/gateway/config/KeyResolverConfig.class
