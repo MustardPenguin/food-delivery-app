@@ -44,8 +44,6 @@ public class CreateProductCommandHandler {
             throw new RestaurantException("Restaurant of id " + restaurantId + " does not exist!");
         }
         RestaurantEntity restaurant = optionalRestaurant.get();
-        System.out.println("Owner: " + restaurant.getOwnerId());
-        System.out.println("Requester: " + command.getManagerId());
         if(!restaurant.getOwnerId().equals(command.getManagerId())) {
             throw new RestaurantException("You must own the restaurant to add products!");
         }

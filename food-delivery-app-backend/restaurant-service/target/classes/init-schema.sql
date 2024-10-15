@@ -21,3 +21,8 @@ CREATE TABLE restaurant.products (
     restaurant_id UUID NOT NULL,
     FOREIGN KEY (restaurant_id) REFERENCES restaurant.restaurants(restaurant_id)
 );
+
+INSERT INTO restaurant.restaurants (restaurant_id, name, address, owner_id, active) VALUES
+(
+    'f86b0456-0a1a-4c90-8f48-136541fb048e', 'restaurant name', 'restaurant address', '6b6379b1-b589-4a81-b0d1-2eb1dc3d55f7', false
+)
