@@ -25,4 +25,9 @@ CREATE TABLE restaurant.products (
 INSERT INTO restaurant.restaurants (restaurant_id, name, address, owner_id, active) VALUES
 (
     'f86b0456-0a1a-4c90-8f48-136541fb048e', 'restaurant name', 'restaurant address', '6b6379b1-b589-4a81-b0d1-2eb1dc3d55f7', false
-)
+);
+
+INSERT INTO restaurant.products (product_id, name, available, price, description, restaurant_id) VALUES
+(
+    '84b17918-4aa6-4be7-8fde-f61b7e022438', 'name', true, 9.99, 'description', 'f86b0456-0a1a-4c90-8f48-136541fb048e'
+);

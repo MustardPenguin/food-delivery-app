@@ -7,6 +7,7 @@
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/util/SecurityContextUtil.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/mapper/RestaurantMapper.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/create_restaurant/v1/endpoints/CreateRestaurantEndpoint.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/get_restaurant_products/v1/helper/GetProductsHelper.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/create_product/v1/mapper/ProductCommandMapper.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/repository/product/ProductJpaRepository.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/domain/entity/Restaurant.java
@@ -19,3 +20,4 @@
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/shared/repository/restaurant/RestaurantJpaRepository.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/create_restaurant/v1/command/CreateRestaurantCommandHandler.java
 /home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/features/create_restaurant/v1/dto/CreateRestaurantCommand.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/restaurant-service/src/main/java/com/food/delivery/app/restaurant/service/config/ApiConfig.java

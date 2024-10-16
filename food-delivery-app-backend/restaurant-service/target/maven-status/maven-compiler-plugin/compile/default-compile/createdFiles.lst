@@ -2,8 +2,11 @@ com/food/delivery/app/restaurant/service/shared/repository/restaurant/Restaurant
 com/food/delivery/app/restaurant/service/shared/repository/product/ProductEntity.class
 com/food/delivery/app/restaurant/service/shared/mapper/RestaurantMapper.class
 com/food/delivery/app/restaurant/service/domain/entity/Restaurant$RestaurantBuilder.class
+com/food/delivery/app/restaurant/service/features/get_restaurant_products/v1/helper/GetProductsHelper.class
 com/food/delivery/app/restaurant/service/features/create_restaurant/v1/command/CreateRestaurantCommandHandler.class
 com/food/delivery/app/restaurant/service/config/RestaurantExceptionHandler.class
+com/food/delivery/app/restaurant/service/features/get_restaurant_products/v1/grpc/ProductServiceImpl.class
+com/food/delivery/app/restaurant/service/config/ApiConfig.class
 com/food/delivery/app/restaurant/service/features/create_product/v1/dto/CreateProductCommand$CreateProductCommandBuilder.class
 com/food/delivery/app/restaurant/service/shared/mapper/ProductMapper.class
 com/food/delivery/app/restaurant/service/shared/repository/product/ProductEntity$ProductEntityBuilder.class
