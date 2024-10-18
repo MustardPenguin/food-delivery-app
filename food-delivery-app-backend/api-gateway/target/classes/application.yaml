@@ -2,6 +2,11 @@
 # General config
 server:
   port: ${PORT:8080}
+  ssl:
+    key-store: classpath:service-keystore.p12
+    key-store-password: password
+    key-store-type: PKCS12
+    key-alias: myservice
 
 spring:
   application:
@@ -88,6 +93,6 @@ spring.security.oauth2:
       api-gateway:
         provider: keycloak
         client-id: api-gateway
-        client-secret: ${CLIENT_SECRET:LftSlWS6xrrOJlW5bACCdtM1nc8s4L97}
+        client-secret: ${CLIENT_SECRET:deVQ5yToDYJ9KQTgUZ1FKrlAfv1a7Dl1}
         authorization-grant-type: authorization_code
         scope: openid
