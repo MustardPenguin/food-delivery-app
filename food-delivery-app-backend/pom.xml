@@ -28,6 +28,7 @@
         <protobuf.version>3.23.4</protobuf.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <grpc.version>1.63.0</grpc.version>
+        <grpc.testing.version>1.65.1</grpc.testing.version>
         <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
     </properties>
 
@@ -106,6 +107,11 @@
             </dependency>
 
             <dependency>
+                <groupId>io.grpc</groupId>
+                <artifactId>grpc-netty</artifactId>
+                <version>${grpc.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>net.devh</groupId>
                 <artifactId>grpc-spring-boot-starter</artifactId>
                 <version>${spring.boot.grpc.version}</version>
@@ -113,6 +119,11 @@
             <dependency>
                 <groupId>net.devh</groupId>
                 <artifactId>grpc-server-spring-boot-starter</artifactId>
+                <version>${spring.boot.grpc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.devh</groupId>
+                <artifactId>grpc-client-spring-boot-starter</artifactId>
                 <version>${spring.boot.grpc.version}</version>
             </dependency>
             <dependency>
@@ -148,7 +159,7 @@
                 <groupId>io.grpc</groupId>
                 <artifactId>grpc-testing</artifactId>
                 <scope>test</scope>
-                <version>1.65.1</version>
+                <version>${grpc.testing.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

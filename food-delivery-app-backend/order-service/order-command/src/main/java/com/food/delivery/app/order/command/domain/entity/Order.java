@@ -29,18 +29,8 @@ public class Order {
         if(this.getOrderItems().isEmpty()) {
             throw new OrderException("Order has no items! Please add something to your order.");
         }
-        BigDecimal total = calculateTotalPrice();
-        if(total.compareTo(BigDecimal.ZERO) < 0) {
-            throw new OrderException("Order total price is invalid! Price: " + total);
+        if(totalPrice.compareTo(BigDecimal.ZERO) < 0) {
+            throw new OrderException("Order total price is invalid! Price: " + totalPrice);
         }
-    }
-
-    public BigDecimal calculateTotalPrice() {
-        BigDecimal total = new BigDecimal("0");
-        for(OrderItem item : orderItems) {
-            BigDecimal quantity = new BigDecimal(item.getQuantity());
-            total = total.add(item.getPrice().multiply(quantity));
-        }
-        return total;
     }
 }

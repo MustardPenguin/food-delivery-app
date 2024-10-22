@@ -25,6 +25,7 @@ public class OrderCommandMapper {
                 .restaurantId(order.getRestaurantId())
                 .orderStatus(order.getOrderStatus())
                 .customerId(order.getCustomerId())
+                .totalPrice(order.getTotalPrice())
                 .orderItems(order.getOrderItems())
                 .orderedAt(order.getOrderedAt())
                 .address(order.getAddress())

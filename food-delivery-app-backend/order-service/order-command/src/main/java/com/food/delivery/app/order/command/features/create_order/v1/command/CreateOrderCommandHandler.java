@@ -1,6 +1,8 @@
 package com.food.delivery.app.order.command.features.create_order.v1.command;
 
+import com.food.delivery.app.common.proto.ProductServiceProto;
 import com.food.delivery.app.order.command.domain.OrderDomainService;
+import com.food.delivery.app.order.command.domain.valueobjects.Product;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderCommand;
 import com.food.delivery.app.order.command.features.create_order.v1.mapper.OrderCommandMapper;
 import com.food.delivery.app.order.command.features.create_order.v1.repository.ordercreatedevent.OrderCreatedEventEntity;
@@ -10,9 +12,11 @@ import com.food.delivery.app.order.command.shared.mapper.OrderMapper;
 import com.food.delivery.app.order.command.shared.repository.order.OrderJpaRepository;
 import com.food.delivery.app.common.utility.datetime.DateTimeUtil;
 import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
+import com.food.delivery.app.order.command.shared.util.GetProductsUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -23,6 +27,7 @@ public class CreateOrderCommandHandler {
     private final OrderDomainService orderDomainService;
     private final OrderCommandMapper orderCommandMapper;
     private final ObjectMapperUtil objectMapperUtil;
+    private final GetProductsUtil getProductsUtil;
     private final DateTimeUtil dateTimeUtil;
     private final OrderMapper orderMapper;
 
@@ -31,6 +36,7 @@ public class CreateOrderCommandHandler {
                                      OrderDomainService orderDomainService,
                                      OrderCommandMapper orderCommandMapper,
                                      ObjectMapperUtil objectMapperUtil,
+                                     GetProductsUtil getProductsUtil,
                                      DateTimeUtil dateTimeUtil,
                                      OrderMapper orderMapper) {
         this.orderCreatedEventJpaRepository = orderCreatedEventJpaRepository;
@@ -38,6 +44,7 @@ public class CreateOrderCommandHandler {
         this.orderDomainService = orderDomainService;
         this.orderCommandMapper = orderCommandMapper;
         this.objectMapperUtil = objectMapperUtil;
+        this.getProductsUtil = getProductsUtil;
         this.dateTimeUtil = dateTimeUtil;
         this.orderMapper = orderMapper;
     }
@@ -45,9 +52,10 @@ public class CreateOrderCommandHandler {
     @Transactional
     public Order handleCreateOrderCommand(CreateOrderCommand createOrderCommand) {
 
-        // TODO: Get products from restaurants via API to get product availability and prices
-        Order order = orderDomainService.validateOrder(orderCommandMapper.commandToOrder(createOrderCommand));
+        List<Product> products = getProductsUtil.getProductsByRestaurantId(createOrderCommand.getRestaurantId());
 
+        // TODO: Get products from restaurants via API to get product availability and prices
+        Order order = orderDomainService.validateOrder(orderCommandMapper.commandToOrder(createOrderCommand), products);
 
         String payload = objectMapperUtil.convertObjectToJson(order);
         orderCreatedEventJpaRepository.save(createOrderEvent(payload));

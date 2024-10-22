@@ -19,7 +19,9 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
 
-        http.authorizeExchange(auth -> auth.anyExchange().authenticated())
+        http.authorizeExchange(auth -> auth
+                        .pathMatchers("/api/v1/restaurants/{restaurantId}/products").permitAll()
+                        .anyExchange().authenticated())
                 .oauth2Login(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
 

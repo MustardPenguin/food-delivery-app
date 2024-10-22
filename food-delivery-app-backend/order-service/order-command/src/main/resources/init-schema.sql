@@ -14,13 +14,15 @@ CREATE TABLE order_command.orders (
     restaurant_id UUID NOT NULL,
     ordered_at TIMESTAMP NOT NULL,
     address VARCHAR(255) NOT NULL,
-    order_status order_status NOT NULL
+    order_status order_status NOT NULL,
+    total_price NUMERIC(10, 2) NOT NULL
 );
 
 CREATE TABLE order_command.order_items (
     order_item_id UUID PRIMARY KEY,
     product_id UUID NOT NULL,
     quantity INT NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
 
     order_id UUID NOT NULL,
     FOREIGN KEY (order_id) REFERENCES order_command.orders(order_id)

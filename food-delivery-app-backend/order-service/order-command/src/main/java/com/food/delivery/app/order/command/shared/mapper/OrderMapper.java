@@ -16,6 +16,7 @@ public class OrderMapper {
         OrderEntity orderEntity = OrderEntity.builder()
                 .restaurantId(order.getRestaurantId())
                 .orderStatus(order.getOrderStatus())
+                .totalPrice(order.getTotalPrice())
                 .customerId(order.getCustomerId())
                 .orderedAt(order.getOrderedAt())
                 .address(order.getAddress())
@@ -32,6 +33,7 @@ public class OrderMapper {
                 .orderItems(orderItemsFromEntities(orderEntity.getOrderItems()))
                 .restaurantId(orderEntity.getRestaurantId())
                 .orderStatus(orderEntity.getOrderStatus())
+                .totalPrice(orderEntity.getTotalPrice())
                 .customerId(orderEntity.getCustomerId())
                 .orderedAt(orderEntity.getOrderedAt())
                 .orderId(orderEntity.getOrderId())
@@ -45,6 +47,7 @@ public class OrderMapper {
                         .orderItemId(orderItem.getOrderItemId())
                         .productId(orderItem.getProductId())
                         .quantity(orderItem.getQuantity())
+                        .price(orderItem.getPrice())
                         .order(orderEntity)
                         .build())
                 .toList();
@@ -56,6 +59,7 @@ public class OrderMapper {
                         .orderItemId(orderItemEntity.getOrderItemId())
                         .productId(orderItemEntity.getProductId())
                         .quantity(orderItemEntity.getQuantity())
+                        .price(orderItemEntity.getPrice())
                         .build())
                 .toList();
     }

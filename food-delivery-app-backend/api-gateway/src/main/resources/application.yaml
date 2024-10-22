@@ -2,11 +2,18 @@
 # General config
 server:
   port: ${PORT:8080}
+  http2:
+    enabled: true
   ssl:
-    key-store: classpath:service-keystore.p12
-    key-store-password: password
-    key-store-type: PKCS12
-    key-alias: myservice
+    key-store: ${KEY_STORE:classpath:service-keystore.p12}
+    key-store-password: ${KEY_STORE_PASSWORD:password}
+    key-store-type: ${KEY_STORE_TYPE:PKCS12}
+    key-alias: ${KEY_ALIAS:myservice}
+    enabled: ${SSL_ENABLED:true}
+
+grpc:
+  server:
+    port: 8079
 
 spring:
   application:
@@ -56,7 +63,7 @@ spring.cloud:
               redis-rate-limiter.requestedTokens: 1
               key-resolver: "#{@KeyResolverConfig}"
       - id: restaurant-service
-        uri: ${RESTAURANT_SERVICE_HOST:http://localhost:8183}
+        uri: ${RESTAURANT_SERVICE_HOST:http://localhost}:8183
         predicates:
           - Path=/api/v1/restaurants/**
         filters:

@@ -31,3 +31,13 @@ INSERT INTO restaurant.products (product_id, name, available, price, description
 (
     '84b17918-4aa6-4be7-8fde-f61b7e022438', 'name', true, 9.99, 'description', 'f86b0456-0a1a-4c90-8f48-136541fb048e'
 );
+
+INSERT INTO restaurant.products (product_id, name, available, price, description, restaurant_id) VALUES
+(
+    '84b17918-4aa6-4be7-8fde-f61b7e022456', 'name', true, 12.5, 'description', 'f86b0456-0a1a-4c90-8f48-136541fb048e'
+);
+
+INSERT INTO restaurant.products (product_id, name, available, price, description, restaurant_id) VALUES
+(
+    '84b17918-4aa6-4be7-8fde-f61b7e022221', 'name', false, 12.5, 'description', 'f86b0456-0a1a-4c90-8f48-136541fb048e'
+);

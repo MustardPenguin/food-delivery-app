@@ -30,6 +30,7 @@ public class BaseTest {
         registry.add("spring.cloud.gateway.routes[0].predicates[0]", () -> "Path=/api/**");
         registry.add("spring.data.redis.host", redis::getHost);
         registry.add("spring.data.redis.port", redis::getFirstMappedPort);
+        registry.add("server.ssl.enabled", () -> "false");
     }
 
     @BeforeAll

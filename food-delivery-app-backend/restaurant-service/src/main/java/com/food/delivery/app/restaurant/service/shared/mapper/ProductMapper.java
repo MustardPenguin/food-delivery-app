@@ -19,8 +19,7 @@ public class ProductMapper {
         return products.stream().map(this::productFromEntity).toList();
     }
 
-
-        public ProductEntity productToEntity(Product product, RestaurantEntity restaurant) {
+    public ProductEntity productToEntity(Product product, RestaurantEntity restaurant) {
         return ProductEntity.builder()
                 .productId(product.getProductId())
                 .restaurant(restaurant)

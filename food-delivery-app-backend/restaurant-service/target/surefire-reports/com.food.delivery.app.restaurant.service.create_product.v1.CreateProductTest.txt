@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.food.delivery.app.restaurant.service.create_product.v1.CreateProductTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.682 s - in com.food.delivery.app.restaurant.service.create_product.v1.CreateProductTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.21 s - in com.food.delivery.app.restaurant.service.create_product.v1.CreateProductTest

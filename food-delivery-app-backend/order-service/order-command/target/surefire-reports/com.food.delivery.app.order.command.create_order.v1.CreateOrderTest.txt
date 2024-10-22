@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.food.delivery.app.order.command.create_order.v1.CreateOrderTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.815 s - in com.food.delivery.app.order.command.create_order.v1.CreateOrderTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.004 s - in com.food.delivery.app.order.command.create_order.v1.CreateOrderTest

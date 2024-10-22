@@ -5,6 +5,7 @@ import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +21,5 @@ public class CreateOrderResponse {
     private String address;
     private LocalDateTime orderedAt;
     private OrderStatus orderStatus;
+    private BigDecimal totalPrice;
 }
