@@ -21,6 +21,7 @@ public class SecurityConfig {
 
         http.authorizeExchange(auth -> auth
                         .pathMatchers("/api/v1/restaurants/{restaurantId}/products").permitAll()
+                        .pathMatchers("/actuator/**").permitAll()
                         .anyExchange().authenticated())
                 .oauth2Login(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));

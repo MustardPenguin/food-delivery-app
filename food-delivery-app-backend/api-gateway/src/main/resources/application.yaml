@@ -11,6 +11,15 @@ server:
     key-alias: ${KEY_ALIAS:myservice}
     enabled: ${SSL_ENABLED:true}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_EXPOSURE_INCLUDE:*}
+  endpoint:
+    health:
+      show-details: always
+
 spring:
   application:
     name: food-delivery-app-api-gateway

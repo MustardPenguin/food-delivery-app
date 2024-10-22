@@ -1,8 +1,15 @@
 
-apiGatewayHost: ${API_GATEWAY_HOST:http://localhost:8080}
-
 server:
   port: ${PORT:8181}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_EXPOSURE_INCLUDE:*}
+  endpoint:
+    health:
+      show-details: always
 
 grpc:
   client:
