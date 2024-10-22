@@ -36,7 +36,7 @@ public class CreateProductCommandHandler {
     }
 
     @Transactional
-    public Product handleCreateProductCommand(CreateProductCommand command, UUID restaurantId) {
+    public Product handleCreateProductCommand(CreateProductCommand command, UUID restaurantId, UUID managerId) {
 
         Optional<RestaurantEntity> optionalRestaurant = restaurantJpaRepository.findByRestaurantId(restaurantId);
 
@@ -44,7 +44,7 @@ public class CreateProductCommandHandler {
             throw new RestaurantException("Restaurant of id " + restaurantId + " does not exist!");
         }
         RestaurantEntity restaurant = optionalRestaurant.get();
-        if(!restaurant.getOwnerId().equals(command.getManagerId())) {
+        if(!restaurant.getOwnerId().equals(managerId)) {
             throw new RestaurantException("You must own the restaurant to add products!");
         }
 

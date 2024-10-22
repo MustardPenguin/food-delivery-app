@@ -23,6 +23,7 @@
         <spring.cloud.dependencies.version>2023.0.0</spring.cloud.dependencies.version>
         <spring.cloud.gateway.version>4.0.6</spring.cloud.gateway.version>
         <spring.cloud.openfeign.version>4.0.2</spring.cloud.openfeign.version>
+        <springdoc.openapi.version>2.6.0</springdoc.openapi.version>
 
         <spring.boot.grpc.version>3.1.0.RELEASE</spring.boot.grpc.version>
         <protobuf.version>3.23.4</protobuf.version>
@@ -104,6 +105,12 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.openfeign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc.openapi.version}</version>
             </dependency>
 
             <dependency>

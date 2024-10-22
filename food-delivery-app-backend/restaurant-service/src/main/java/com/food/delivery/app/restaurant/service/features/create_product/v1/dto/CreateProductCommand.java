@@ -20,5 +20,4 @@ public class CreateProductCommand {
     @NotNull(message = "Price must not be blank!")
     private BigDecimal price;
     private boolean available;
-    private UUID managerId;
 }

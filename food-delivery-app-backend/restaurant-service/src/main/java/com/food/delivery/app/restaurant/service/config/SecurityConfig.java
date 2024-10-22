@@ -1,4 +1,5 @@
-package com.food.delivery.app.order.command.configs;
+package com.food.delivery.app.restaurant.service.config;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

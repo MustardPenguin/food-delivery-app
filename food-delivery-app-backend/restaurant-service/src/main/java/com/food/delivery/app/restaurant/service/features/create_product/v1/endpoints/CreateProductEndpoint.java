@@ -28,9 +28,8 @@ public class CreateProductEndpoint {
     @CheckRoles(roles = {"restaurant-manager"})
     public ResponseEntity<Product> createProduct(@RequestBody @Validated CreateProductCommand command, @PathVariable UUID restaurantId) {
         UUID accountId = securityContextUtil.getUUIDFromSecurityContext();
-        command.setManagerId(accountId);
 
-        Product product = commandHandler.handleCreateProductCommand(command, restaurantId);
+        Product product = commandHandler.handleCreateProductCommand(command, restaurantId, accountId);
         return ResponseEntity.ok(product);
     }
 }

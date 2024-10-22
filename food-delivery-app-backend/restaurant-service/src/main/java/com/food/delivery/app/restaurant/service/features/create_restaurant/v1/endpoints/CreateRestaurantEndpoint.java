@@ -39,9 +39,8 @@ public class CreateRestaurantEndpoint {
     @CheckRoles(roles = {"restaurant-manager"})
     public ResponseEntity<CreateRestaurantResponse> createRestaurant(@RequestBody @Validated CreateRestaurantCommand createRestaurantCommand) {
         UUID ownerId = securityContextUtil.getUUIDFromSecurityContext();
-        createRestaurantCommand.setOwnerId(ownerId);
 
-        Restaurant restaurant = createRestaurantCommandHandler.handleCreateRestaurantCommand(createRestaurantCommand);
+        Restaurant restaurant = createRestaurantCommandHandler.handleCreateRestaurantCommand(createRestaurantCommand, ownerId);
         return ResponseEntity.ok(restaurantCommandMapper.restaurantToResponse(restaurant));
     }
 }

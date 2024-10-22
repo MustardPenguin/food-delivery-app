@@ -2,6 +2,7 @@ package com.food.delivery.app.order.command.shared.mapper;
 
 import com.food.delivery.app.order.command.domain.entity.Order;
 import com.food.delivery.app.order.command.domain.entity.OrderItem;
+import com.food.delivery.app.order.command.shared.dto.OrderItemRequest;
 import com.food.delivery.app.order.command.shared.repository.order.OrderEntity;
 import com.food.delivery.app.order.command.shared.repository.order.OrderItemEntity;
 import org.springframework.stereotype.Component;
@@ -62,5 +63,14 @@ public class OrderMapper {
                         .price(orderItemEntity.getPrice())
                         .build())
                 .toList();
+    }
+
+    public List<OrderItem> orderItemFromRequest(List<OrderItemRequest> orderItems) {
+        return orderItems.stream().map(orderItem ->
+                OrderItem.builder()
+                        .productId(orderItem.getProductId())
+                        .quantity(orderItem.getQuantity())
+                        .price(orderItem.getPrice())
+                        .build()).toList();
     }
 }

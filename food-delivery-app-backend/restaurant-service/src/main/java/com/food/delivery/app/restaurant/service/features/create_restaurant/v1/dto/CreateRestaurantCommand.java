@@ -18,5 +18,4 @@ public class CreateRestaurantCommand {
     @NotNull(message = "Address must not be blank!")
     @NotBlank(message = "Address must not be blank!")
     private String address;
-    private UUID ownerId;
 }

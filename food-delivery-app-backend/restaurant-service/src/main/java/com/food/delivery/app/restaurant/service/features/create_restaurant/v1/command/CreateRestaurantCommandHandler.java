@@ -28,9 +28,10 @@ public class CreateRestaurantCommandHandler {
     }
 
     @Transactional
-    public Restaurant handleCreateRestaurantCommand(CreateRestaurantCommand createRestaurantCommand) {
+    public Restaurant handleCreateRestaurantCommand(CreateRestaurantCommand createRestaurantCommand, UUID ownerId) {
         Restaurant restaurant = restaurantCommandMapper.commandToRestaurant(createRestaurantCommand);
         restaurant.setRestaurantId(UUID.randomUUID());
+        restaurant.setOwnerId(ownerId);
         restaurant.setActive(false);
 
         restaurantJpaRepository.save(restaurantMapper.restaurantToEntity(restaurant));

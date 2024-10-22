@@ -4,18 +4,25 @@ import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateO
 import com.food.delivery.app.order.command.domain.entity.Order;
 import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderResponse;
+import com.food.delivery.app.order.command.shared.mapper.OrderMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
 public class OrderCommandMapper {
-    public Order commandToOrder(CreateOrderCommand createOrderCommand) {
+
+    private final OrderMapper orderMapper;
+
+    public OrderCommandMapper(OrderMapper orderMapper) {
+        this.orderMapper = orderMapper;
+    }
+
+    public Order commandToOrder(CreateOrderCommand createOrderCommand, UUID customerId) {
         return Order.builder()
                 .restaurantId(createOrderCommand.getRestaurantId())
-                .customerId(createOrderCommand.getCustomerId())
-                .orderItems(createOrderCommand.getOrderItems())
-                .orderedAt(createOrderCommand.getOrderedAt())
+                .customerId(customerId)
+                .orderItems(orderMapper.orderItemFromRequest(createOrderCommand.getOrderItems()))
                 .address(createOrderCommand.getAddress())
                 .build();
     }

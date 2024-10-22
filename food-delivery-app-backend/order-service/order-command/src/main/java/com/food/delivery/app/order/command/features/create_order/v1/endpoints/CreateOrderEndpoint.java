@@ -26,14 +26,11 @@ public class CreateOrderEndpoint {
 
     private final CreateOrderCommandHandler createOrderCommandHandler;
     private final OrderCommandMapper orderCommandMapper;
-    private final DateTimeUtil dateTimeUtil;
 
     public CreateOrderEndpoint(CreateOrderCommandHandler createOrderCommandHandler,
-                               OrderCommandMapper orderCommandMapper,
-                               DateTimeUtil dateTimeUtil) {
+                               OrderCommandMapper orderCommandMapper) {
         this.createOrderCommandHandler = createOrderCommandHandler;
         this.orderCommandMapper = orderCommandMapper;
-        this.dateTimeUtil = dateTimeUtil;
     }
 
     @PostMapping
@@ -44,10 +41,7 @@ public class CreateOrderEndpoint {
         UUID customerId = UUID.fromString(authentication.getName());
         log.info("Creating order for customer id {}", customerId);
 
-        createOrderCommand.setCustomerId(customerId);
-        createOrderCommand.setOrderedAt(dateTimeUtil.getCurrentDateTime());
-
-        Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand);
+        Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand, customerId);
         return ResponseEntity.ok(orderCommandMapper.orderToResponse(order));
     }
 }

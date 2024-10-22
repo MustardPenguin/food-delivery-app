@@ -15,7 +15,6 @@ public class RestaurantCommandMapper {
                 .name(createRestaurantCommand.getRestaurantName())
                 .products(new ArrayList<>())
                 .address(createRestaurantCommand.getAddress())
-                .ownerId(createRestaurantCommand.getOwnerId())
                 .build();
     }
 
