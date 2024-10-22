@@ -1,4 +1,0 @@
-com/food/delivery/app/common/annotation/role/verification/CheckRoles.class
-com/food/delivery/app/common/annotation/role/verification/CheckRolesAspect.class
-com/food/delivery/app/common/annotation/role/verification/UnauthorizedException.class
-com/food/delivery/app/common/annotation/role/verification/CheckRolesExceptionHandler.class

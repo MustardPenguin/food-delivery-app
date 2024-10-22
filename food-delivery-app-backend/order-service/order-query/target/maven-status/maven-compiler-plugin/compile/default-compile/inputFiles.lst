@@ -1,3 +1,0 @@
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/order-service/order-query/src/main/java/com/food/delivery/app/order/query/repository/OrderEntity.java
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/order-service/order-query/src/main/java/com/food/delivery/app/order/query/OrderQueryApplication.java
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/order-service/order-query/src/main/java/com/food/delivery/app/order/query/message/OrderCreatedEventKafkaListener.java

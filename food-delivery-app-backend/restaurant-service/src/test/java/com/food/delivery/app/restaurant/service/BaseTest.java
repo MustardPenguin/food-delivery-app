@@ -15,7 +15,6 @@ public class BaseTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withUrlParam("stringtype", "unspecified")
             .withUrlParam("currentSchema", "restaurant")
-            .withInitScript("init-schema.sql")
             .withReuse(true);
 
     @DynamicPropertySource
@@ -23,6 +22,8 @@ public class BaseTest {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
+        // Override initial schema setup
+        registry.add("spring.sql.init.schema-locations", () -> "classpath:init-schema-test.sql");
     }
 
     @BeforeAll

@@ -1,8 +1,0 @@
-event/block.class
-order_created/order_command/order_created_events/Envelope.class
-order_created/order_command/order_created_events/Value$Builder.class
-order_created/order_command/order_created_events/Envelope$Builder.class
-event/block$Builder.class
-order_created/order_command/order_created_events/Value.class
-io/debezium/connector/postgresql/Source.class
-io/debezium/connector/postgresql/Source$Builder.class
