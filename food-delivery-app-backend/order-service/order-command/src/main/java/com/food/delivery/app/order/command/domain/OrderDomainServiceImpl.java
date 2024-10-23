@@ -44,6 +44,10 @@ public class OrderDomainServiceImpl implements OrderDomainService {
             if(!product.isAvailable()) {
                 throw new OrderException("Product of id " + item.getProductId() + " is not available!");
             }
+            if(product.getPrice().compareTo(item.getPrice()) != 0) {
+                throw new OrderException("Order item of price " + item.getProductId() + " differs from product price " + product.getPrice()
+                        + " for product of " + product.getProductId() + "!");
+            }
             BigDecimal productCost = product.getPrice().multiply(new BigDecimal(item.getQuantity()));
             item.setPrice(productCost);
             total = total.add(productCost);
