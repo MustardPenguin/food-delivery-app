@@ -2,9 +2,9 @@ package com.food.delivery.app.restaurant.service.features.create_product.v1.endp
 
 import com.food.delivery.app.common.annotation.role.verification.CheckRoles;
 import com.food.delivery.app.common.domain.entity.Product;
+import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.command.CreateProductCommandHandler;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.dto.CreateProductCommand;
-import com.food.delivery.app.restaurant.service.shared.util.SecurityContextUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

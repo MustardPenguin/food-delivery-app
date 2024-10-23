@@ -3,12 +3,11 @@ package com.food.delivery.app.restaurant.service.create_product.v1;
 import com.food.delivery.app.common.annotation.role.verification.CheckRolesAspect;
 import com.food.delivery.app.common.domain.entity.Product;
 import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
+import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.restaurant.service.BaseTest;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.dto.CreateProductCommand;
-import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.dto.CreateRestaurantCommand;
 import com.food.delivery.app.restaurant.service.shared.repository.product.ProductEntity;
 import com.food.delivery.app.restaurant.service.shared.repository.product.ProductJpaRepository;
-import com.food.delivery.app.restaurant.service.shared.util.SecurityContextUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +18,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -36,8 +34,6 @@ public class CreateProductTest extends BaseTest {
 
     @Autowired
     private ProductJpaRepository productJpaRepository;
-    @Autowired
-    private ObjectMapperUtil objectMapperUtil;
 
     @MockBean
     private CheckRolesAspect checkRolesAspect;
@@ -73,11 +69,11 @@ public class CreateProductTest extends BaseTest {
 
         HttpEntity<CreateProductCommand> entity = new HttpEntity<>(command, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
+        ResponseEntity<Product> response = restTemplate.exchange(
                 url + port + "/api/v1/restaurants/" + restaurantId + "/products",
-                HttpMethod.POST, entity, String.class);
+                HttpMethod.POST, entity, Product.class);
 
-        Product body = objectMapperUtil.convertJsonToObject(response.getBody(), Product.class);
+        Product body = response.getBody();
 
         assertEquals(name, body.getName());
         assertEquals(description, body.getDescription());

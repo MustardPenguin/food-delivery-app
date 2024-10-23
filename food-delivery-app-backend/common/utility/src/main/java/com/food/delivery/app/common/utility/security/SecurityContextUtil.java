@@ -1,4 +1,4 @@
-package com.food.delivery.app.restaurant.service.shared.util;
+package com.food.delivery.app.common.utility.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,5 +1,6 @@
 package com.food.delivery.app.command.features.create_order.v1.endpoints;
 
+import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.order.command.domain.entity.Order;
 import com.food.delivery.app.order.command.features.create_order.v1.command.CreateOrderCommandHandler;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderCommand;
@@ -25,20 +26,21 @@ import java.util.UUID;
 public class CreateOrderEndpoint {
 
     private final CreateOrderCommandHandler createOrderCommandHandler;
+    private final SecurityContextUtil securityContextUtil;
     private final OrderCommandMapper orderCommandMapper;
 
     public CreateOrderEndpoint(CreateOrderCommandHandler createOrderCommandHandler,
+                               SecurityContextUtil securityContextUtil,
                                OrderCommandMapper orderCommandMapper) {
         this.createOrderCommandHandler = createOrderCommandHandler;
+        this.securityContextUtil = securityContextUtil;
         this.orderCommandMapper = orderCommandMapper;
     }
 
     @PostMapping
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Validated CreateOrderCommand createOrderCommand) {
         // Fetches account information from oauth2
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        UUID customerId = UUID.fromString(authentication.getName());
+        UUID customerId = securityContextUtil.getUUIDFromSecurityContext();
         log.info("Creating order for customer id {}", customerId);
 
         Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand, customerId);

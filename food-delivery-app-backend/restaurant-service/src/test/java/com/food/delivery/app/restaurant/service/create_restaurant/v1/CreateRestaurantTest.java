@@ -1,22 +1,19 @@
 package com.food.delivery.app.restaurant.service.create_restaurant.v1;
 
 import com.food.delivery.app.common.annotation.role.verification.CheckRolesAspect;
-import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
+import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.restaurant.service.BaseTest;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.dto.CreateRestaurantCommand;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.dto.CreateRestaurantResponse;
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantEntity;
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantJpaRepository;
-import com.food.delivery.app.restaurant.service.shared.util.SecurityContextUtil;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -30,8 +27,6 @@ public class CreateRestaurantTest extends BaseTest {
 
     @Autowired
     private RestaurantJpaRepository restaurantJpaRepository;
-    @Autowired
-    private ObjectMapperUtil objectMapperUtil;
 
     @MockBean
     private CheckRolesAspect checkRolesAspect;
@@ -79,12 +74,11 @@ public class CreateRestaurantTest extends BaseTest {
                 .build();
         HttpEntity<CreateRestaurantCommand> entity = new HttpEntity<>(command, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                url + port + "/api/v1/restaurants", HttpMethod.POST, entity, String.class);
+        ResponseEntity<CreateRestaurantResponse> response = restTemplate.exchange(
+                url + port + "/api/v1/restaurants", HttpMethod.POST, entity, CreateRestaurantResponse.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        CreateRestaurantResponse body = objectMapperUtil.convertJsonToObject(response.getBody(), CreateRestaurantResponse.class);
-
+        CreateRestaurantResponse body = response.getBody();
         // Validates that command and response is equal
         assertEquals(name, body.getRestaurantName());
         assertEquals(address, body.getAddress());

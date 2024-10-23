@@ -1,16 +1,13 @@
 package com.food.delivery.app.restaurant.service.features.create_restaurant.v1.endpoints;
 
 import com.food.delivery.app.common.annotation.role.verification.CheckRoles;
+import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.restaurant.service.domain.entity.Restaurant;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.command.CreateRestaurantCommandHandler;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.dto.CreateRestaurantCommand;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.dto.CreateRestaurantResponse;
 import com.food.delivery.app.restaurant.service.features.create_restaurant.v1.mapper.RestaurantCommandMapper;
-import com.food.delivery.app.restaurant.service.shared.util.SecurityContextUtil;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
