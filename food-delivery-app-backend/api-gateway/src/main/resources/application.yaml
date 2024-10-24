@@ -1,5 +1,5 @@
 
-# General config
+# General
 server:
   port: ${PORT:8080}
   http2:
@@ -11,6 +11,11 @@ server:
     key-alias: ${KEY_ALIAS:myservice}
     enabled: ${SSL_ENABLED:true}
 
+spring:
+  application:
+    name: food-delivery-app-api-gateway
+
+# Metrics
 management:
   endpoints:
     web:
@@ -20,15 +25,13 @@ management:
     health:
       show-details: always
 
-spring:
-  application:
-    name: food-delivery-app-api-gateway
-
+# Logging
 logging:
   level:
     org:
       springframework: ${LOGGING_LEVEL:INFO}
 
+# Datasource
 spring.data.redis:
   host: ${REDIS_HOST:localhost}
   port: ${REDIS_PORT:6379}
@@ -92,7 +95,7 @@ spring.cloud:
               name: CircuitBreakerInstance
               fallbackUri: forward:/fallback/test
 
-# Security config
+# Security
 spring.security.oauth2:
   resourceserver:
     jwt:

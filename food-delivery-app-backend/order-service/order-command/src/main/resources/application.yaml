@@ -1,7 +1,16 @@
 
+# General
 server:
   port: ${PORT:8181}
 
+spring:
+  application:
+    name: order-service-command
+  jpa:
+    open-in-view: false
+
+# Metrics
+# Metrics
 management:
   endpoints:
     web:
@@ -11,6 +20,7 @@ management:
     health:
       show-details: always
 
+# gRPC
 grpc:
   client:
     restaurant-service:
@@ -19,17 +29,13 @@ grpc:
       keepAliveWithoutCalls: true
       negotiationType: plaintext
 
+# Logging
 logging:
   level:
     org:
       springframework: ${LOGGING_LEVEL:INFO}
 
-spring:
-  application:
-    name: order-service-command
-  jpa:
-    open-in-view: false
-
+# Datasource
 spring.datasource:
   url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/postgres?stringtype=unspecified&currentSchema=order_command
   username: ${DATABASE_USER:user}
@@ -42,6 +48,7 @@ spring.sql:
     platform: postgres
     mode: always
 
+# Security
 spring.security:
   oauth2:
     resourceserver:
