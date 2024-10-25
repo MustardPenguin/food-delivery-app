@@ -7,7 +7,9 @@ import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateO
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderResponse;
 import com.food.delivery.app.common.utility.datetime.DateTimeUtil;
 import com.food.delivery.app.order.command.features.create_order.v1.mapper.OrderCommandMapper;
+import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -38,9 +40,11 @@ public class CreateOrderEndpoint {
     }
 
     @PostMapping
+    @Observed(name = "order-command:create-order")
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Validated CreateOrderCommand createOrderCommand) {
         // Fetches account information from oauth2
         UUID customerId = securityContextUtil.getUUIDFromSecurityContext();
+
         log.info("Creating order for customer id {}", customerId);
 
         Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand, customerId);

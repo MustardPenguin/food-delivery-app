@@ -10,15 +10,17 @@ spring:
     open-in-view: false
 
 # Metrics
-# Metrics
 management:
   endpoints:
     web:
       exposure:
         include: ${ACTUATOR_EXPOSURE_INCLUDE:*}
-  endpoint:
-    health:
-      show-details: always
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
+  tracing:
+    sampling:
+      probability: ${SAMPLING_PROBABILITY:1.0}
 
 # gRPC
 grpc:

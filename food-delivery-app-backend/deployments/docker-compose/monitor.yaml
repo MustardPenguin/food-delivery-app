@@ -16,3 +16,10 @@ services:
       - "9092:3000"
     volumes:
       - ./config/datasources:/etc/grafana/provisioning/datasources
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686" # UI
+      - "4318:4318" # HTTP
+      - "4317:4317" # gRPC

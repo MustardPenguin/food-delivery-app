@@ -9,30 +9,30 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <!--    Maven    -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
+        <!--    Test containers    -->
         <testcontainers.version>1.20.0</testcontainers.version>
         <testcontainers.keycloak.version>3.5.0</testcontainers.keycloak.version>
         <testcontainers.redis.version>2.2.2</testcontainers.redis.version>
-
+        <!--    Messaging    -->
         <kafka.avro.serializer.version>7.6.0</kafka.avro.serializer.version>
         <avro.version>1.11.3</avro.version>
-
+        <!--    Spring cloud     -->
         <spring.cloud.dependencies.version>2023.0.3</spring.cloud.dependencies.version>
         <spring.cloud.gateway.version>4.1.5</spring.cloud.gateway.version>
-        <spring.cloud.openfeign.version>4.1.3</spring.cloud.openfeign.version>
-
+        <spring.resilience4j.version>3.1.1</spring.resilience4j.version>
+        <!--    Open API    -->
         <springdoc.openapi.version>2.6.0</springdoc.openapi.version>
-
+        <!--    gRPC    -->
         <spring.boot.grpc.version>3.1.0.RELEASE</spring.boot.grpc.version>
         <protobuf.version>3.23.4</protobuf.version>
         <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
         <grpc.version>1.63.0</grpc.version>
         <grpc.testing.version>1.65.1</grpc.testing.version>
         <jakarta.annotation.version>2.1.1</jakarta.annotation.version>
-        <spring.resilience4j.version>3.1.1</spring.resilience4j.version>
     </properties>
 
     <packaging>pom</packaging>
@@ -100,6 +100,13 @@
 
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-gateway</artifactId>
                 <version>${spring.cloud.gateway.version}</version>
             </dependency>
@@ -108,6 +115,12 @@
                 <artifactId>spring-cloud-starter-openfeign</artifactId>
                 <version>${spring.cloud.openfeign.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+                <version>${spring.resilience4j.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -169,6 +182,22 @@
                 <artifactId>grpc-testing</artifactId>
                 <scope>test</scope>
                 <version>${grpc.testing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${testcontainers.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.dasniko</groupId>
+                <artifactId>testcontainers-keycloak</artifactId>
+                <version>${testcontainers.keycloak.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.redis</groupId>
+                <artifactId>testcontainers-redis</artifactId>
+                <version>${testcontainers.redis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
