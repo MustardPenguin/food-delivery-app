@@ -21,3 +21,10 @@ scrape_configs:
       - targets: [ '172.17.0.1:8181' ]
         labels:
           app: 'food-delivery-app-metrics'
+  - job_name: 'restaurant_service_metrics'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 15s
+    static_configs:
+      - targets: [ '172.17.0.1:8183' ]
+        labels:
+          app: 'food-delivery-app-metrics'
