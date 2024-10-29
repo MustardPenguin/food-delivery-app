@@ -22,6 +22,7 @@ management:
     sampling:
       probability: ${SAMPLING_PROBABILITY:1.0}
 
+
 # gRPC
 grpc:
   client:
