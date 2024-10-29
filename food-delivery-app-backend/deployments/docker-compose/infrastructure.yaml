@@ -83,21 +83,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka-broker-1:9093,2@kafka-broker-2:9093,3@kafka-broker-3:9093'
       CLUSTER_ID: f1p7ULGbT_qGDINRRLoz7g
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    platform: linux/amd64
-    container_name: kafka-ui
-    ports:
-      - "9000:8080"
-    depends_on:
-      - kafka-broker-1
-      - kafka-broker-2
-      - kafka-broker-3
-      - schema-registry
-    environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-broker-1:9092,kafka-broker-2:9092,kafka-broker-3:9092
-      KAFKA_CLUSTERS_0_SCHEMA_REGISTRY: http://schema-registry:8081
   debezium:
     image: debezium/connect:3.0
     platform: linux/amd64
@@ -148,3 +133,14 @@ services:
       - "6379:6379"
     environment:
       REDIS_PASSWORD: admin
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
