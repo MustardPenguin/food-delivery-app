@@ -1,4 +1,4 @@
-package com.food.delivery.app.common.domain.entity;
+package com.food.delivery.app.restaurant.service.domain.entity;
 
 import lombok.*;
 

@@ -1,6 +1,5 @@
 package com.food.delivery.app.restaurant.service.domain.entity;
 
-import com.food.delivery.app.common.domain.entity.Product;
 import lombok.Builder;
 import lombok.Data;
 

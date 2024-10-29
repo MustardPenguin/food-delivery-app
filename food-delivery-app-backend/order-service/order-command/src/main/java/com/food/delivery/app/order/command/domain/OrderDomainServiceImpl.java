@@ -1,8 +1,8 @@
 package com.food.delivery.app.order.command.domain;
 
+import com.food.delivery.app.common.domain.valueobjects.OrderStatus;
 import com.food.delivery.app.order.command.domain.entity.Order;
 import com.food.delivery.app.order.command.domain.entity.OrderItem;
-import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
 import com.food.delivery.app.order.command.domain.valueobjects.Product;
 import com.food.delivery.app.order.command.shared.exceptions.OrderException;
 import org.springframework.stereotype.Service;

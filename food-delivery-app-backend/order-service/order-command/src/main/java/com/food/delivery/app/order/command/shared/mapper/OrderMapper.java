@@ -1,5 +1,7 @@
 package com.food.delivery.app.order.command.shared.mapper;
 
+import com.food.delivery.app.common.domain.event.payload.OrderEventPayload;
+import com.food.delivery.app.common.domain.event.payload.OrderItemEventPayload;
 import com.food.delivery.app.order.command.domain.entity.Order;
 import com.food.delivery.app.order.command.domain.entity.OrderItem;
 import com.food.delivery.app.order.command.shared.dto.OrderItemRequest;
@@ -21,7 +23,7 @@ public class OrderMapper {
                 .customerId(order.getCustomerId())
                 .orderedAt(order.getOrderedAt())
                 .address(order.getAddress())
-                .orderId(UUID.randomUUID())
+                .orderId(order.getOrderId())
                 .build();
 
         orderEntity.setOrderItems(orderItemsToEntities(order.getOrderItems(), orderEntity));
@@ -72,5 +74,24 @@ public class OrderMapper {
                         .quantity(orderItem.getQuantity())
                         .price(orderItem.getPrice())
                         .build()).toList();
+    }
+
+    public OrderEventPayload orderToEventPayload(Order order) {
+        List<OrderItemEventPayload> orderItems = order.getOrderItems().stream().map(item -> OrderItemEventPayload.builder()
+                .orderItemId(item.getOrderItemId())
+                .productId(item.getProductId())
+                .quantity(item.getQuantity())
+                .price(item.getPrice())
+                .build()).toList();
+        return OrderEventPayload.builder()
+                .orderId(order.getOrderId())
+                .customerId(order.getCustomerId())
+                .restaurantId(order.getRestaurantId())
+                .orderItems(orderItems)
+                .address(order.getAddress())
+                .orderedAt(order.getOrderedAt())
+                .orderStatus(order.getOrderStatus())
+                .totalPrice(order.getTotalPrice())
+                .build();
     }
 }

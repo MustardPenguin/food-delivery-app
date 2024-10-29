@@ -1,8 +1,7 @@
 package com.food.delivery.app.restaurant.service.create_product.v1;
 
 import com.food.delivery.app.common.annotation.role.verification.CheckRolesAspect;
-import com.food.delivery.app.common.domain.entity.Product;
-import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
+import com.food.delivery.app.restaurant.service.domain.entity.Product;
 import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.restaurant.service.BaseTest;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.dto.CreateProductCommand;

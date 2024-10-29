@@ -1,6 +1,6 @@
 package com.food.delivery.app.order.command.shared.repository.order;
 
-import com.food.delivery.app.order.command.domain.valueobjects.OrderStatus;
+import com.food.delivery.app.common.domain.valueobjects.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

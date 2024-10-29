@@ -45,10 +45,11 @@ public class CreateOrderEndpoint {
     public ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Validated CreateOrderCommand createOrderCommand) {
         // Fetches account information from oauth2
         UUID customerId = securityContextUtil.getUUIDFromSecurityContext();
-
         log.info("Creating order for customer id {}", customerId);
 
         Order order = createOrderCommandHandler.handleCreateOrderCommand(createOrderCommand, customerId);
+        log.info("Successfully created order of id {} for customer id {} at {}", order.getOrderId(), customerId, order.getOrderedAt());
+
         return ResponseEntity.ok(orderCommandMapper.orderToResponse(order));
     }
 }

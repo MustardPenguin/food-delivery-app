@@ -1,5 +1,6 @@
 package com.food.delivery.app.order.command.features.create_order.v1.command;
 
+import com.food.delivery.app.common.domain.event.payload.OrderEventPayload;
 import com.food.delivery.app.common.proto.ProductServiceProto;
 import com.food.delivery.app.order.command.domain.OrderDomainService;
 import com.food.delivery.app.order.command.domain.valueobjects.Product;
@@ -56,7 +57,8 @@ public class CreateOrderCommandHandler {
         Order order = orderDomainService.validateOrder(orderCommandMapper.commandToOrder(createOrderCommand, customerId), products);
         order.setOrderedAt(dateTimeUtil.getCurrentDateTime());
 
-        String payload = objectMapperUtil.convertObjectToJson(order);
+        OrderEventPayload orderEventPayload = orderMapper.orderToEventPayload(order);
+        String payload = objectMapperUtil.convertObjectToJson(orderEventPayload);
         orderCreatedEventJpaRepository.save(createOrderEvent(payload));
         orderJpaRepository.save(orderMapper.orderToEntity(order));
 

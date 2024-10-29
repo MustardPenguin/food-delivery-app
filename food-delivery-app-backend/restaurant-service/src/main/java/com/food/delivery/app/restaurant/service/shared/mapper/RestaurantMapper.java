@@ -1,12 +1,8 @@
 package com.food.delivery.app.restaurant.service.shared.mapper;
 
-import com.food.delivery.app.common.domain.entity.Product;
 import com.food.delivery.app.restaurant.service.domain.entity.Restaurant;
-import com.food.delivery.app.restaurant.service.shared.repository.product.ProductEntity;
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class RestaurantMapper {

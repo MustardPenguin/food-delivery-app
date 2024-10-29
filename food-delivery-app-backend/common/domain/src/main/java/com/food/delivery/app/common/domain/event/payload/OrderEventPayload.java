@@ -1,7 +1,6 @@
-package com.food.delivery.app.order.command.features.create_order.v1.dtos;
+package com.food.delivery.app.common.domain.event.payload;
 
 import com.food.delivery.app.common.domain.valueobjects.OrderStatus;
-import com.food.delivery.app.order.command.domain.entity.OrderItem;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,12 +11,13 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class CreateOrderResponse {
+public class OrderEventPayload {
 
     private UUID orderId;
     private UUID customerId;
     private UUID restaurantId;
-    List<OrderItem> orderItems;
+
+    List<OrderItemEventPayload> orderItems;
     private String address;
     private LocalDateTime orderedAt;
     private OrderStatus orderStatus;

@@ -1,12 +1,10 @@
 package com.food.delivery.app.restaurant.service.features.create_product.v1.command;
 
-import com.food.delivery.app.common.domain.entity.Product;
-import com.food.delivery.app.restaurant.service.domain.entity.Restaurant;
+import com.food.delivery.app.restaurant.service.domain.entity.Product;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.dto.CreateProductCommand;
 import com.food.delivery.app.restaurant.service.features.create_product.v1.mapper.ProductCommandMapper;
 import com.food.delivery.app.restaurant.service.shared.exceptions.RestaurantException;
 import com.food.delivery.app.restaurant.service.shared.mapper.ProductMapper;
-import com.food.delivery.app.restaurant.service.shared.mapper.RestaurantMapper;
 import com.food.delivery.app.restaurant.service.shared.repository.product.ProductEntity;
 import com.food.delivery.app.restaurant.service.shared.repository.product.ProductJpaRepository;
 import com.food.delivery.app.restaurant.service.shared.repository.restaurant.RestaurantEntity;
