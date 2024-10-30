@@ -1,15 +1,21 @@
 package com.food.delivery.app.order.command.create_order.v1;
 
+import com.food.delivery.app.common.domain.event.payload.OrderEventPayload;
+import com.food.delivery.app.common.domain.event.payload.OrderItemEventPayload;
 import com.food.delivery.app.common.proto.ProductServiceProto;
+import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
 import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.order.command.BaseTest;
 import com.food.delivery.app.order.command.domain.entity.OrderItem;
 import com.food.delivery.app.order.command.domain.valueobjects.Product;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderCommand;
 import com.food.delivery.app.order.command.features.create_order.v1.dtos.CreateOrderResponse;
+import com.food.delivery.app.order.command.features.create_order.v1.repository.ordercreatedevent.OrderCreatedEventEntity;
+import com.food.delivery.app.order.command.features.create_order.v1.repository.ordercreatedevent.OrderCreatedEventJpaRepository;
 import com.food.delivery.app.order.command.shared.dto.OrderItemRequest;
 import com.food.delivery.app.order.command.shared.util.GetProductsUtil;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -32,6 +38,10 @@ public class CreateOrderTest extends BaseTest {
     private SecurityContextUtil securityContextUtil;
     @MockBean
     private GetProductsUtil getProductsUtil;
+    @Autowired
+    private OrderCreatedEventJpaRepository orderCreatedEventJpaRepository;
+    @Autowired
+    private ObjectMapperUtil objectMapperUtil;
 
     TestRestTemplate restTemplate = new TestRestTemplate();
     HttpHeaders headers = new HttpHeaders();
@@ -84,5 +94,16 @@ public class CreateOrderTest extends BaseTest {
         assertNotNull(item);
         assertEquals(productId, item.getProductId());
         assertEquals(0, price.compareTo(item.getPrice()));
+
+        List<OrderCreatedEventEntity> events = orderCreatedEventJpaRepository.findAll();
+        assertEquals(1, events.size());
+        OrderCreatedEventEntity event = events.get(0);
+        OrderEventPayload payload = objectMapperUtil.convertJsonToObject(event.getPayload(), OrderEventPayload.class);
+        assertEquals(customerId, payload.getCustomerId());
+        assertEquals(restaurantId, payload.getRestaurantId());
+        assertEquals(0, price.compareTo(payload.getTotalPrice()));
+        OrderItemEventPayload itemPayload = payload.getOrderItems().get(0);
+        assertEquals(productId, itemPayload.getProductId());
+        assertEquals(0, price.compareTo(itemPayload.getPrice()));
     }
 }
