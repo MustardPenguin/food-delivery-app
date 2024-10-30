@@ -16,7 +16,6 @@ public class OrderEventPayload {
     private UUID orderId;
     private UUID customerId;
     private UUID restaurantId;
-
     List<OrderItemEventPayload> orderItems;
     private String address;
     private LocalDateTime orderedAt;

@@ -6,6 +6,8 @@ import com.food.delivery.app.order.query.repository.OrderEntity;
 import com.food.delivery.app.order.query.repository.OrderItemEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Component
@@ -25,13 +27,14 @@ public class OrderEventHelper {
                 .quantity(item.getQuantity())
                 .price(item.getPrice())
                 .build()).toList();
+        Long createdAt = order.getOrderedAt().toInstant(ZoneOffset.UTC).toEpochMilli();
         return OrderEntity.builder()
                 .orderId(order.getOrderId())
                 .customerId(order.getCustomerId())
                 .restaurantId(order.getRestaurantId())
                 .orderItems(orderItems)
                 .address(order.getAddress())
-                .orderedAt(order.getOrderedAt())
+                .orderedAt(createdAt)
                 .orderStatus(order.getOrderStatus())
                 .totalPrice(order.getTotalPrice())
                 .build();

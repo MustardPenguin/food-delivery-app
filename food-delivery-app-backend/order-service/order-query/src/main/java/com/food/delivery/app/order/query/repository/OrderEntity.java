@@ -1,12 +1,13 @@
 package com.food.delivery.app.order.query.repository;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.food.delivery.app.common.domain.valueobjects.OrderStatus;
+import com.food.delivery.app.order.query.helper.CustomZonedDateTimeConverter;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class OrderEntity {
     @Field(type = FieldType.Nested, includeInParent = true)
     List<OrderItemEntity> orderItems;
     private String address;
-    private LocalDateTime orderedAt;
+    private Long orderedAt;
     private OrderStatus orderStatus;
     private BigDecimal totalPrice;
 }
