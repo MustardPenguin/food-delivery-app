@@ -16,6 +16,7 @@ spring:
 spring.elasticsearch:
     uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
 
+
 #spring.datasource:
 #  url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/postgres?stringtype=unspecified&currentSchema=order_query
 #  username: ${DATABASE_USER:user}
