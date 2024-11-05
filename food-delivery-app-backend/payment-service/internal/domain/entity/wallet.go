@@ -1,8 +1,7 @@
 package entity
 
 type Wallet struct {
-	CustomerId  string
-	WalletId    string
-	PaymentInfo string
-	Balance     float64
+	CustomerId string
+	WalletId   string
+	Balance    float64
 }
