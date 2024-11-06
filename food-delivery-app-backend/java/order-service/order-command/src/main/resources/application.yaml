@@ -1,0 +1,67 @@
+
+# General
+server:
+  port: ${PORT:8181}
+
+spring:
+  application:
+    name: order-service-command
+  jpa:
+    open-in-view: false
+
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_EXPOSURE_INCLUDE:*}
+  otlp:
+    tracing:
+      endpoint: ${OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}
+  tracing:
+    sampling:
+      probability: ${SAMPLING_PROBABILITY:1.0}
+
+# gRPC
+grpc:
+  client:
+    restaurant-service:
+      address: ${RESTAURANT_SERVICE_GRPC_HOST:static://localhost:8184}
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+# Circuit breaking
+resilience4j.circuitbreaker.instances:
+  grpc-circuit-breaker:
+    failureRateThreshold: 50  # Percentage of failures before opening the circuit
+    waitDurationInOpenState: 10000ms  # Time to wait before attempting to close the circuit
+    permittedNumberOfCallsInHalfOpenState: 3
+    slidingWindowSize: 20
+    minimumNumberOfCalls: 5
+
+# Logging
+logging:
+  level:
+    org:
+      springframework: ${LOGGING_LEVEL:INFO}
+
+# Datasource
+spring.datasource:
+  url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/postgres?stringtype=unspecified&currentSchema=order_command
+  username: ${DATABASE_USER:user}
+  password: ${DATABASE_PASSWORD:admin}
+  driver-class-name: org.postgresql.Driver
+
+spring.sql:
+  init:
+    schema-locations: classpath:init-schema.sql
+    platform: postgres
+    mode: always
+
+# Security
+spring.security:
+  oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/food-delivery-app/protocol/openid-connect/certs}

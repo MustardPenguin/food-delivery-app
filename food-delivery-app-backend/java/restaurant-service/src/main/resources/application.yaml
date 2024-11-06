@@ -1,0 +1,51 @@
+
+# General
+server:
+  port: ${PORT:8183}
+
+spring:
+  application:
+    name: restaurant-service
+  jpa:
+    open-in-view: false
+
+# gRPC
+grpc:
+  server:
+    port: ${GRPC_PORT:8184}
+
+# Metrics
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_EXPOSURE_INCLUDE:*}
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    org:
+      springframework: ${LOGGING_LEVEL:INFO}
+
+# Datasource
+spring.datasource:
+  url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/postgres?stringtype=unspecified&currentSchema=restaurant
+  username: ${DATABASE_USER:user}
+  password: ${DATABASE_PASSWORD:admin}
+  driver-class-name: org.postgresql.Driver
+
+spring.sql:
+  init:
+    schema-locations: classpath:init-schema.sql
+    platform: postgres
+    mode: always
+
+# Security
+spring.security:
+  oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: ${JWK_SET_URI:http://localhost:9090/realms/food-delivery-app/protocol/openid-connect/certs}
