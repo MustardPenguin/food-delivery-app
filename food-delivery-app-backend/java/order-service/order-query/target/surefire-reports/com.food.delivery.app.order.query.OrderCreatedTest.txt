@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.food.delivery.app.order.query.OrderCreatedTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.26 s -- in com.food.delivery.app.order.query.OrderCreatedTest

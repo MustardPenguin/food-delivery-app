@@ -1,0 +1,4 @@
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/api-gateway/src/main/java/com/food/delivery/app/api/gateway/ApiGatewayApplication.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/api-gateway/src/main/java/com/food/delivery/app/api/gateway/config/SecurityConfig.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/api-gateway/src/main/java/com/food/delivery/app/api/gateway/config/KeyResolverConfig.java
+/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/api-gateway/src/main/java/com/food/delivery/app/api/gateway/controller/FallbackController.java

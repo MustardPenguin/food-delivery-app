@@ -1,0 +1,3 @@
+com/food/delivery/app/api/gateway/tests/TestController.class
+com/food/delivery/app/api/gateway/tests/ApiGatewayTest.class
+com/food/delivery/app/api/gateway/BaseTest.class
