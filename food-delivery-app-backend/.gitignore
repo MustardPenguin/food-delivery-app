@@ -3,8 +3,8 @@
 .idea
 
 # Project
-/api-gateway/target
-/order-service/*/target
-/restaurant-service/target
+/java/api-gateway/target
+/java/order-service/*/target
+/java/restaurant-service/target
 
-/common/*/target
+/java/common/*/target

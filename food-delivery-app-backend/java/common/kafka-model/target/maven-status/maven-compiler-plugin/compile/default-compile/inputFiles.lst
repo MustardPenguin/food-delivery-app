@@ -1,4 +1,0 @@
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/common/kafka-model/src/main/java/com/food/delivery/app/common/kafka/model/avro/event/block.java
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/common/kafka-model/src/main/java/com/food/delivery/app/common/kafka/model/avro/order_created/order_command/order_created_events/Envelope.java
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/common/kafka-model/src/main/java/com/food/delivery/app/common/kafka/model/avro/order_created/order_command/order_created_events/Value.java
-/home/mustardpenguin/repos/food-delivery-app/food-delivery-app-backend/java/common/kafka-model/src/main/java/com/food/delivery/app/common/kafka/model/avro/io/debezium/connector/postgresql/Source.java

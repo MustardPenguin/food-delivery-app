@@ -85,6 +85,21 @@ spring.cloud:
               redis-rate-limiter.burstCapacity: 4
               redis-rate-limiter.requestedTokens: 1
               key-resolver: "#{@KeyResolverConfig}"
+      - id: payment-service
+        uri: ${PAYMENT_SERVICE_HOST:http://localhost}:8185
+        predicates:
+          - Path=/api/v1/payments/**,/api/v1/wallets/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/restaurants
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 2
+              redis-rate-limiter.burstCapacity: 4
+              redis-rate-limiter.requestedTokens: 1
+              key-resolver: "#{@KeyResolverConfig}"
       - id: any
         uri: http://localhost:8181
         predicates:

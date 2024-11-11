@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"payment-service/internal/api/helper"
 	"payment-service/internal/application/dto"
 )
 
@@ -42,4 +43,9 @@ func (wc *WalletController) CreateWallet(w http.ResponseWriter, r *http.Request)
 
 	fmt.Printf("body: %v", data)
 
+	sub, err := helper.GetSubjectFromToken(r)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
 }

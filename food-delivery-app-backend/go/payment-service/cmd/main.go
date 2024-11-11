@@ -1,8 +1,21 @@
 package main
 
-import "payment-service/internal/api"
+import (
+	"github.com/joho/godotenv"
+	"log"
+	"os"
+	"payment-service/internal/api"
+)
 
 func main() {
 
-	api.StartServer("8185")
+	err := godotenv.Load("../.env")
+
+	if err != nil {
+		log.Fatalf("error loading .env files: %v", err)
+	}
+
+	port := os.Getenv("PORT")
+
+	api.StartServer(port)
 }
