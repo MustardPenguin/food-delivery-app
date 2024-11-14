@@ -1,19 +1,27 @@
 package controller
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"payment-service/internal/api/helper"
+	"payment-service/internal/application/adapter"
 	"payment-service/internal/application/dto"
+	"payment-service/internal/application/port"
 )
 
 type WalletController struct {
+	WalletService port.WalletService
+	JwtHelper     helper.JwtHelper
 }
 
-func NewWalletController() WalletController {
-	return WalletController{}
+func NewWalletController(db *sql.DB) *WalletController {
+	return &WalletController{
+		WalletService: adapter.NewStandardWalletService(db),
+		JwtHelper:     helper.NewJwtHelperImpl(),
+	}
 }
 
 func (wc *WalletController) CreateWallet(w http.ResponseWriter, r *http.Request) {
@@ -43,9 +51,20 @@ func (wc *WalletController) CreateWallet(w http.ResponseWriter, r *http.Request)
 
 	fmt.Printf("body: %v", data)
 
-	sub, err := helper.GetSubjectFromToken(r)
+	sub, err := wc.JwtHelper.GetSubjectFromToken(r)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+
+	wallet, err := wc.WalletService.CreateWallet(data, sub)
+	if err != nil {
+		return
+	}
+
+	err = json.NewEncoder(w).Encode(wallet)
+	if err != nil {
+		str := fmt.Sprintf("error encoding json for response: %v", err)
+		http.Error(w, str, http.StatusInternalServerError)
 	}
 }
