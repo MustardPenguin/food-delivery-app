@@ -3,11 +3,11 @@ package adapter
 import (
 	"database/sql"
 	"errors"
+	"food-delivery-app-backend/payment-service/internal/application/dto"
+	"food-delivery-app-backend/payment-service/internal/application/port"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/infrastructure/repository/wallet"
 	"github.com/google/uuid"
-	"payment-service/internal/application/dto"
-	"payment-service/internal/application/port"
-	"payment-service/internal/domain/entity"
-	"payment-service/internal/infrastructure/repository/wallet"
 )
 
 type StandardWalletService struct {

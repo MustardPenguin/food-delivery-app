@@ -1,9 +1,9 @@
 package tests
 
 import (
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/infrastructure/repository/wallet"
 	"github.com/google/uuid"
-	"payment-service/internal/domain/entity"
-	"payment-service/internal/infrastructure/repository/wallet"
 	"testing"
 )
 

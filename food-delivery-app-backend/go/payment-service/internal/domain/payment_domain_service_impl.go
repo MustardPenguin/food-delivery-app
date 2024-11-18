@@ -3,7 +3,7 @@ package domain
 import (
 	"errors"
 	"fmt"
-	"payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
 )
 
 type PaymentDomainServiceImpl struct{}

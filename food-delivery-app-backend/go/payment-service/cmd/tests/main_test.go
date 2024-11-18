@@ -3,10 +3,10 @@ package tests
 import (
 	"context"
 	"database/sql"
+	"food-delivery-app-backend/payment-service/cmd/tests/setup"
 	_ "github.com/lib/pq"
 	"log"
 	"os"
-	"payment-service/cmd/tests/setup"
 	"testing"
 )
 

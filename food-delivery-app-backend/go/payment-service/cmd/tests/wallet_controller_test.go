@@ -2,21 +2,20 @@ package tests
 
 import (
 	"bytes"
-	"encoding/json"
+	common "food-delivery-app-backend/common/api"
+	"food-delivery-app-backend/payment-service/internal/api/controller"
+	"food-delivery-app-backend/payment-service/internal/application/adapter"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"github.com/google/uuid"
-	"io"
 	"log"
 	"net/http"
 	"net/http/httptest"
-	"payment-service/internal/api/controller"
-	"payment-service/internal/application/adapter"
-	"payment-service/internal/domain/entity"
 	"testing"
 )
 
 func convertToJson(t *testing.T, body map[string]interface{}) []byte {
 	t.Helper()
-	j, err := json.Marshal(body)
+	j, err := common.ConvertToJson(body)
 
 	if err != nil {
 		t.Errorf("error while parsing json: %v", err)
@@ -25,20 +24,16 @@ func convertToJson(t *testing.T, body map[string]interface{}) []byte {
 	return j
 }
 
-func getBody[T any](t testing.TB, res *http.Response, data T) T {
+func getBody[T any](t testing.TB, r *http.Response, data T) T {
 	t.Helper()
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		t.Errorf("Unable to read response body: %v", http.StatusInternalServerError)
-	}
-	defer res.Body.Close()
 
-	err = json.Unmarshal(body, &data)
+	d, err := common.GetBody(r, data)
+
 	if err != nil {
-		t.Errorf("Error parsing json: %v", err)
+		t.Errorf("error getting response body: %v", err)
 	}
 
-	return data
+	return d
 }
 
 type MockJwtHelper struct{}

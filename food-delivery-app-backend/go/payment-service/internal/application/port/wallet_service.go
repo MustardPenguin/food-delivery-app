@@ -1,8 +1,8 @@
 package port
 
 import (
-	"payment-service/internal/application/dto"
-	"payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/application/dto"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
 )
 
 type WalletService interface {

@@ -1,10 +1,10 @@
 package main
 
 import (
+	"food-delivery-app-backend/payment-service/internal/api"
 	"github.com/joho/godotenv"
 	"log"
 	"os"
-	"payment-service/internal/api"
 )
 
 func main() {

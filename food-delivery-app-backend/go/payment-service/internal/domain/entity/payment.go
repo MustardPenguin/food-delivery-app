@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"payment-service/internal/domain/valueobject"
+	"food-delivery-app-backend/payment-service/internal/domain/valueobject"
 	"time"
 )
 

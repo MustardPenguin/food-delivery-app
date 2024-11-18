@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"testing"
 	"time"
 )

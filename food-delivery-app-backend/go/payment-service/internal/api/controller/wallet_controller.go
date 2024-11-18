@@ -4,12 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"food-delivery-app-backend/payment-service/internal/api/helper"
+	"food-delivery-app-backend/payment-service/internal/application/adapter"
+	"food-delivery-app-backend/payment-service/internal/application/dto"
+	"food-delivery-app-backend/payment-service/internal/application/port"
 	"io"
 	"net/http"
-	"payment-service/internal/api/helper"
-	"payment-service/internal/application/adapter"
-	"payment-service/internal/application/dto"
-	"payment-service/internal/application/port"
 )
 
 type WalletController struct {
