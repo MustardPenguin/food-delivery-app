@@ -1,15 +1,15 @@
 package api
 
 import (
+	"database/sql"
 	"fmt"
 	"food-delivery-app-backend/payment-service/internal/api/controller"
 	"log"
 	"net/http"
-	"payment-service/internal/api/controller"
 )
 
-func StartServer(port string) {
-	setupController()
+func StartServer(port string, db *sql.DB) {
+	setupController(db)
 
 	addr := fmt.Sprintf(":%s", port)
 	err := http.ListenAndServe(addr, nil)
@@ -19,9 +19,9 @@ func StartServer(port string) {
 	}
 }
 
-func setupController() {
+func setupController(db *sql.DB) {
 
-	wc := controller.NewWalletController()
+	wc := controller.NewWalletController(db)
 
 	http.HandleFunc("POST /api/v1/wallets", wc.CreateWallet)
 }
