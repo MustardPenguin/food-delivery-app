@@ -56,6 +56,7 @@ public class CreateOrderTest extends BaseTest {
         final UUID customerId = UUID.randomUUID();
         final UUID restaurantId = UUID.randomUUID();
         final UUID productId = UUID.randomUUID();
+        final UUID walletId = UUID.randomUUID();
         final BigDecimal price = new BigDecimal("9.99");
 
         var t = Product.builder().build();
@@ -76,6 +77,7 @@ public class CreateOrderTest extends BaseTest {
 
         CreateOrderCommand command = CreateOrderCommand.builder()
                 .restaurantId(restaurantId)
+                .walletId(walletId)
                 .orderItems(orderItems)
                 .address("address")
                 .build();
@@ -87,6 +89,7 @@ public class CreateOrderTest extends BaseTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
         CreateOrderResponse body = response.getBody();
+        assertEquals(walletId, body.getWalletId());
         assertEquals(customerId, body.getCustomerId());
         assertEquals(restaurantId, body.getRestaurantId());
         assertEquals(0, price.compareTo(body.getTotalPrice()));
@@ -99,6 +102,7 @@ public class CreateOrderTest extends BaseTest {
         assertEquals(1, events.size());
         OrderCreatedEventEntity event = events.get(0);
         OrderEventPayload payload = objectMapperUtil.convertJsonToObject(event.getPayload(), OrderEventPayload.class);
+        assertEquals(walletId, payload.getWalletId());
         assertEquals(customerId, payload.getCustomerId());
         assertEquals(restaurantId, payload.getRestaurantId());
         assertEquals(0, price.compareTo(payload.getTotalPrice()));

@@ -24,6 +24,7 @@ public class OrderEntity {
     private UUID orderId;
     private UUID customerId;
     private UUID restaurantId;
+    private UUID walletId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     List<OrderItemEntity> orderItems;
     private String address;

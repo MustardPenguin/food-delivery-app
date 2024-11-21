@@ -21,6 +21,7 @@ public class OrderCommandMapper {
     public Order commandToOrder(CreateOrderCommand createOrderCommand, UUID customerId) {
         return Order.builder()
                 .restaurantId(createOrderCommand.getRestaurantId())
+                .walletId(createOrderCommand.getWalletId())
                 .customerId(customerId)
                 .orderItems(orderMapper.orderItemFromRequest(createOrderCommand.getOrderItems()))
                 .address(createOrderCommand.getAddress())
@@ -35,6 +36,7 @@ public class OrderCommandMapper {
                 .totalPrice(order.getTotalPrice())
                 .orderItems(order.getOrderItems())
                 .orderedAt(order.getOrderedAt())
+                .walletId(order.getWalletId())
                 .address(order.getAddress())
                 .orderId(order.getOrderId())
                 .build();

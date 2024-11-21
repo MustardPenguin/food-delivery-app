@@ -17,6 +17,7 @@ public class Order {
     private UUID orderId;
     private UUID customerId;
     private UUID restaurantId;
+    private UUID walletId;
 
     List<OrderItem> orderItems;
     private String address;

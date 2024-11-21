@@ -18,6 +18,8 @@ public class CreateOrderCommand {
 
     @NotNull(message = "Restaurant id must not be null")
     private UUID restaurantId;
+    @NotNull(message = "Wallet id must not be null")
+    private UUID walletId;
     @NotNull(message = "Order must not be null")
     private List<OrderItemRequest> orderItems;
     @NotBlank(message = "Address must not be null")

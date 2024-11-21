@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	common "food-delivery-app-backend/common/api"
+	"food-delivery-app-backend/payment-service/internal/application/adapter"
+	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/linkedin/goavro"
@@ -12,10 +14,14 @@ import (
 	"time"
 )
 
-type MessageHandler struct{}
+type MessageHandler struct {
+	PaymentService port.PaymentService
+}
 
-func NewMessageHandler() MessageHandler {
-	return MessageHandler{}
+func NewMessageHandler() *MessageHandler {
+	return &MessageHandler{
+		PaymentService: adapter.NewStandardPaymentService(),
+	}
 }
 
 func HandleMessage(msg *kafka.Message, schemaUrl string) error {

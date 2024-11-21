@@ -10,6 +10,7 @@ CREATE TYPE order_status AS ENUM('PENDING_PAYMENT', 'PAID');
 
 CREATE TABLE order_command.orders (
     order_id UUID PRIMARY KEY,
+    wallet_id UUID NOT NULL,
     customer_id UUID NOT NULL,
     restaurant_id UUID NOT NULL,
     ordered_at TIMESTAMP NOT NULL,
