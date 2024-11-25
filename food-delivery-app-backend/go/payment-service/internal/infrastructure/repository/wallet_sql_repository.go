@@ -1,4 +1,4 @@
-package wallet
+package repository
 
 import (
 	"database/sql"
@@ -28,20 +28,23 @@ func (w *WalletSqlRepository) SaveWallet(wallet entity.Wallet) (entity.Wallet, e
 	return wallet, nil
 }
 
-func (w *WalletSqlRepository) GetWalletByCustomerId(id string) (entity.Wallet, error) {
-
-	var walletId, customerId string
-	var balance float64
-
+func (w *WalletSqlRepository) GetWalletSByCustomerId(id string) ([]entity.Wallet, error) {
 	query := `SELECT wallet_id, customer_id, balance FROM payment.wallets WHERE customer_id = $1`
 
-	err := w.db.QueryRow(query, id).Scan(&walletId, &customerId, &balance)
-
+	rows, err := w.db.Query(query, id)
+	var wallets []entity.Wallet
 	if err != nil {
-		return entity.Wallet{}, nil
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var wallet entity.Wallet
+		err = rows.Scan(&wallet.WalletId, &wallet.CustomerId, &wallet.Balance)
+		if err != nil {
+			return nil, err
+		}
+		wallets = append(wallets, wallet)
 	}
 
-	return entity.Wallet{
-		WalletId: walletId, CustomerId: customerId, Balance: balance,
-	}, nil
+	return wallets, nil
 }

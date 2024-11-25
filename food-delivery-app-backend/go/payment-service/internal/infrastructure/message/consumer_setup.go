@@ -23,6 +23,7 @@ func StartConsumers(config *kafka.ConfigMap, topics []string, schemaUrl string) 
 }
 
 func handleConsumer(consumer *kafka.Consumer, schemaUrl string) {
+	handler := NewMessageHandler()
 	for {
 		msg, err := consumer.ReadMessage(-1)
 
@@ -31,7 +32,7 @@ func handleConsumer(consumer *kafka.Consumer, schemaUrl string) {
 			continue
 		}
 
-		err = HandleMessage(msg, schemaUrl)
+		err = handler.HandleMessage(msg, schemaUrl)
 		if err != nil {
 			log.Printf("error handling message: %v", err)
 			continue

@@ -24,7 +24,7 @@ func NewMessageHandler() *MessageHandler {
 	}
 }
 
-func HandleMessage(msg *kafka.Message, schemaUrl string) error {
+func (m *MessageHandler) HandleMessage(msg *kafka.Message, schemaUrl string) error {
 
 	schemaId := int(binary.BigEndian.Uint32(msg.Value[1:5]))
 	schema, err := getSchema(schemaUrl, schemaId)
@@ -36,12 +36,19 @@ func HandleMessage(msg *kafka.Message, schemaUrl string) error {
 		return err
 	}
 
-	eventToPayment(val)
+	payment, err := eventToPayment(val)
+	if err != nil {
+		return err
+	}
+	err = m.PaymentService.PayOrder(payment)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
 
-func eventToPayment(msg interface{}) {
+func eventToPayment(msg interface{}) (entity.Payment, error) {
 
 	ev := msg.(map[string]interface{})
 	after := ev["after"].(map[string]interface{})
@@ -52,17 +59,19 @@ func eventToPayment(msg interface{}) {
 	err := json.Unmarshal([]byte(payload), &order)
 	if err != nil {
 		fmt.Printf("error unmarshalling payload: %v", err)
-		return
+		return entity.Payment{}, err
 	}
 
 	payment := entity.Payment{
 		CustomerId: order["customerId"].(string),
+		WalletId:   order["walletId"].(string),
 		OrderId:    order["orderId"].(string),
 		Amount:     order["totalPrice"].(float64),
 		CreatedAt:  time.Now().UTC(),
 	}
 
 	fmt.Printf("\n payment: %v", payment)
+	return payment, nil
 }
 
 func getSchema(schemaUrl string, id int) (string, error) {

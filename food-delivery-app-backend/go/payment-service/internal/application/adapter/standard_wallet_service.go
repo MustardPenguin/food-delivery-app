@@ -6,7 +6,7 @@ import (
 	"food-delivery-app-backend/payment-service/internal/application/dto"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
-	"food-delivery-app-backend/payment-service/internal/infrastructure/repository/wallet"
+	"food-delivery-app-backend/payment-service/internal/infrastructure/repository"
 	"github.com/google/uuid"
 )
 
@@ -16,7 +16,7 @@ type StandardWalletService struct {
 
 func NewStandardWalletService(db *sql.DB) *StandardWalletService {
 	return &StandardWalletService{
-		WalletRepository: wallet.NewWalletSqlRepository(db),
+		WalletRepository: repository.NewWalletSqlRepository(db),
 	}
 }
 
