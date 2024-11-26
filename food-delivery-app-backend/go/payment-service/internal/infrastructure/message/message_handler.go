@@ -1,6 +1,7 @@
 package message
 
 import (
+	"database/sql"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -18,9 +19,9 @@ type MessageHandler struct {
 	PaymentService port.PaymentService
 }
 
-func NewMessageHandler() *MessageHandler {
+func NewMessageHandler(db *sql.DB) *MessageHandler {
 	return &MessageHandler{
-		PaymentService: adapter.NewStandardPaymentService(),
+		PaymentService: adapter.NewStandardPaymentService(db),
 	}
 }
 

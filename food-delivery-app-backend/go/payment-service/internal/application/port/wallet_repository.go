@@ -1,8 +1,12 @@
 package port
 
-import "food-delivery-app-backend/payment-service/internal/domain/entity"
+import (
+	"database/sql"
+	"food-delivery-app-backend/payment-service/internal/domain/entity"
+)
 
 type WalletRepository interface {
-	SaveWallet(wallet entity.Wallet) (entity.Wallet, error)
-	GetWalletSByCustomerId(customerId string) ([]entity.Wallet, error)
+	SaveWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error)
+	GetWalletsByCustomerId(customerId string) ([]entity.Wallet, error)
+	GetWalletById(walletId string) (entity.Wallet, error)
 }

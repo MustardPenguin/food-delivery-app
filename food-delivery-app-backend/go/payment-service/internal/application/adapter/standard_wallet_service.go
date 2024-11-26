@@ -3,6 +3,7 @@ package adapter
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"food-delivery-app-backend/payment-service/internal/application/dto"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
@@ -12,11 +13,13 @@ import (
 
 type StandardWalletService struct {
 	WalletRepository port.WalletRepository
+	db               *sql.DB
 }
 
 func NewStandardWalletService(db *sql.DB) *StandardWalletService {
 	return &StandardWalletService{
 		WalletRepository: repository.NewWalletSqlRepository(db),
+		db:               db,
 	}
 }
 
@@ -32,8 +35,19 @@ func (w *StandardWalletService) CreateWallet(command dto.CreateWalletCommand, cu
 		Balance:    command.InitialBalance,
 	}
 
-	response, err := w.WalletRepository.SaveWallet(wallet)
+	fmt.Printf("\n s: %v", w)
+	fmt.Printf("\n db: %v", w.db)
+	tx, err := w.db.Begin()
+	if err != nil {
+		return entity.Wallet{}, nil
+	}
+	defer tx.Rollback()
 
+	response, err := w.WalletRepository.SaveWallet(tx, wallet)
+	if err != nil {
+		return entity.Wallet{}, err
+	}
+	err = tx.Commit()
 	if err != nil {
 		return entity.Wallet{}, err
 	}

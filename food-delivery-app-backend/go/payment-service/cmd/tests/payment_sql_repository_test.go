@@ -28,9 +28,19 @@ func initPaymentSqlRepositoryTest() {
 func TestSavePayment(t *testing.T) {
 	initPaymentSqlRepositoryTest()
 
-	got, err := paymentRepository.SavePayment(payment)
+	tx, err := db.Begin()
+	if err != nil {
+		t.Errorf("error starting transaction: %v", err)
+	}
+	defer tx.Rollback()
+	got, err := paymentRepository.SavePayment(tx, payment)
+
 	if err != nil {
 		t.Errorf("error saving payment: %v", err)
+	}
+	err = tx.Commit()
+	if err != nil {
+		t.Errorf("error commiting transaction: %v", err)
 	}
 	if got != payment {
 		t.Errorf("got %v want %v", got, payment)

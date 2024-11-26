@@ -33,8 +33,9 @@ func main() {
 	orderCreated := os.Getenv("ORDER_CREATED_EVENT_TOPIC")
 	topics := []string{orderCreated}
 
-	message.StartConsumers(config, topics, schemaUrl)
-	api.StartServer(port, db)
+	go message.StartConsumers(config, topics, schemaUrl, db)
+	go api.StartServer(port, db)
+	select {}
 }
 
 func initConnection() *sql.DB {

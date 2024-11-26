@@ -16,13 +16,13 @@ func NewPaymentSqlRepository(db *sql.DB) *PaymentSqlRepository {
 	}
 }
 
-func (p *PaymentSqlRepository) SavePayment(payment entity.Payment) (entity.Payment, error) {
+func (p *PaymentSqlRepository) SavePayment(tx *sql.Tx, payment entity.Payment) (entity.Payment, error) {
 
 	query := `INSERT INTO payment.payments 
     	(payment_id, customer_id, order_id, wallet_id, amount, created_at, payment_status) 
 		VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING payment_id`
 
-	err := p.db.QueryRow(query, payment.PaymentId, payment.CustomerId, payment.OrderId, payment.WalletId,
+	err := tx.QueryRow(query, payment.PaymentId, payment.CustomerId, payment.OrderId, payment.WalletId,
 		payment.Amount, payment.CreatedAt, strings.ToUpper(string(payment.PaymentStatus))).Scan(&payment.PaymentId)
 
 	if err != nil {

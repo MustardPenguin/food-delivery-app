@@ -53,6 +53,7 @@ func TestCreateWallet(t *testing.T) {
 		WalletService: adapter.NewStandardWalletService(db),
 		JwtHelper:     &MockJwtHelper{},
 	}
+
 	body := convertToJson(t, command)
 
 	r, err := http.NewRequest("POST", "/api/v1/wallets", bytes.NewBuffer(body))

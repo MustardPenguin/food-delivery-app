@@ -15,11 +15,11 @@ func NewWalletSqlRepository(db *sql.DB) *WalletSqlRepository {
 	}
 }
 
-func (w *WalletSqlRepository) SaveWallet(wallet entity.Wallet) (entity.Wallet, error) {
+func (w *WalletSqlRepository) SaveWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error) {
 
 	query := `INSERT INTO payment.wallets (wallet_id, customer_id, balance) VALUES ($1, $2, $3) RETURNING wallet_id`
 
-	err := w.db.QueryRow(query, wallet.WalletId, wallet.CustomerId, wallet.Balance).Scan(&wallet.WalletId)
+	err := tx.QueryRow(query, wallet.WalletId, wallet.CustomerId, wallet.Balance).Scan(&wallet.WalletId)
 
 	if err != nil {
 		return entity.Wallet{}, err
@@ -28,7 +28,7 @@ func (w *WalletSqlRepository) SaveWallet(wallet entity.Wallet) (entity.Wallet, e
 	return wallet, nil
 }
 
-func (w *WalletSqlRepository) GetWalletSByCustomerId(id string) ([]entity.Wallet, error) {
+func (w *WalletSqlRepository) GetWalletsByCustomerId(id string) ([]entity.Wallet, error) {
 	query := `SELECT wallet_id, customer_id, balance FROM payment.wallets WHERE customer_id = $1`
 
 	rows, err := w.db.Query(query, id)
@@ -47,4 +47,14 @@ func (w *WalletSqlRepository) GetWalletSByCustomerId(id string) ([]entity.Wallet
 	}
 
 	return wallets, nil
+}
+
+func (w *WalletSqlRepository) GetWalletById(walletId string) (entity.Wallet, error) {
+	query := `SELECT wallet_id, customer_id, balance FROM payment.wallets WHERE wallet_id = $1`
+	var wallet entity.Wallet
+	err := w.db.QueryRow(query, walletId).Scan(&wallet.WalletId, &wallet.CustomerId, &wallet.Balance)
+	if err != nil {
+		return entity.Wallet{}, nil
+	}
+	return wallet, nil
 }

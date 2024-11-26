@@ -93,7 +93,7 @@ spring.cloud:
           - name: CircuitBreaker
             args:
               name: CircuitBreakerInstance
-              fallbackUri: forward:/fallback/restaurants
+              fallbackUri: forward:/fallback/payments
           - name: RequestRateLimiter
             args:
               redis-rate-limiter.replenishRate: 2
