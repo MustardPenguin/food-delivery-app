@@ -3,6 +3,7 @@ package repository
 import (
 	"database/sql"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
+	"math"
 )
 
 type WalletSqlRepository struct {
@@ -21,6 +22,17 @@ func (w *WalletSqlRepository) SaveWallet(tx *sql.Tx, wallet entity.Wallet) (enti
 
 	err := tx.QueryRow(query, wallet.WalletId, wallet.CustomerId, wallet.Balance).Scan(&wallet.WalletId)
 
+	if err != nil {
+		return entity.Wallet{}, err
+	}
+
+	return wallet, nil
+}
+
+func (w *WalletSqlRepository) UpdateWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error) {
+
+	query := `UPDATE payment.wallets SET balance = $1 RETURNING wallet_id`
+	err := tx.QueryRow(query, wallet.Balance).Scan(&wallet.WalletId)
 	if err != nil {
 		return entity.Wallet{}, err
 	}
@@ -56,5 +68,6 @@ func (w *WalletSqlRepository) GetWalletById(walletId string) (entity.Wallet, err
 	if err != nil {
 		return entity.Wallet{}, nil
 	}
+	wallet.Balance = math.Round(wallet.Balance*100) / 100
 	return wallet, nil
 }

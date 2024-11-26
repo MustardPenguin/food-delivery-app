@@ -19,7 +19,7 @@ func NewStandardPaymentService(db *sql.DB) *StandardPaymentService {
 	return &StandardPaymentService{
 		WalletRepository:  repository.NewWalletSqlRepository(db),
 		PaymentRepository: repository.NewPaymentSqlRepository(db),
-		DomainService:     &domain.PaymentDomainServiceImpl{},
+		DomainService:     domain.NewPaymentDomainServiceImpl(),
 		db:                db,
 	}
 }
@@ -40,6 +40,15 @@ func (p *StandardPaymentService) PayOrder(payment entity.Payment) error {
 		return err
 	}
 	defer tx.Rollback()
+
+	_, err = p.PaymentRepository.SavePayment(tx, payment)
+	if err != nil {
+		return err
+	}
+	_, err = p.WalletRepository.UpdateWallet(tx, wallet)
+	if err != nil {
+		return err
+	}
 
 	err = tx.Commit()
 	if err != nil {

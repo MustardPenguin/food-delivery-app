@@ -4,22 +4,25 @@ import (
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"food-delivery-app-backend/payment-service/internal/infrastructure/repository"
-	"github.com/google/uuid"
 	"testing"
 )
 
-var walletRepository port.WalletRepository
-var wCustomerId string
-var wWalletId string
+type WalletSqlRepositoryTest struct {
+	WalletRepository port.WalletRepository
+	CustomerId       string
+	WalletId         string
+}
 
-func initWalletSqlRepositoryTest() {
-	walletRepository = repository.NewWalletSqlRepository(db)
-	wCustomerId = uuid.NewString()
-	wWalletId = uuid.NewString()
+func NewWalletSqlRepositoryTest() *WalletSqlRepositoryTest {
+	return &WalletSqlRepositoryTest{
+		WalletRepository: repository.NewWalletSqlRepository(db),
+		CustomerId:       "a593ff1a-08cb-485b-8277-fa5d30f8320f",
+		WalletId:         "49f20d33-fc13-43d1-a9c9-3ce1cf6da761",
+	}
 }
 
 func TestSaveWallet(t *testing.T) {
-	initWalletSqlRepositoryTest()
+	ws := NewWalletSqlRepositoryTest()
 
 	tx, err := db.Begin()
 	if err != nil {
@@ -27,8 +30,8 @@ func TestSaveWallet(t *testing.T) {
 	}
 	defer tx.Rollback()
 
-	want := entity.Wallet{CustomerId: wCustomerId, WalletId: wWalletId, Balance: 50}
-	got, err := walletRepository.SaveWallet(tx, want)
+	want := entity.Wallet{CustomerId: ws.CustomerId, WalletId: ws.WalletId, Balance: 50}
+	got, err := ws.WalletRepository.SaveWallet(tx, want)
 
 	if err != nil {
 		t.Errorf("error while saving wallet: %v", err)
@@ -44,8 +47,10 @@ func TestSaveWallet(t *testing.T) {
 }
 
 func TestGetWalletByCustomerId(t *testing.T) {
-	want := entity.Wallet{CustomerId: wCustomerId, WalletId: wWalletId, Balance: 50}
-	got, err := walletRepository.GetWalletsByCustomerId(wCustomerId)
+	ws := NewWalletSqlRepositoryTest()
+
+	want := entity.Wallet{CustomerId: ws.CustomerId, WalletId: ws.WalletId, Balance: 50}
+	got, err := ws.WalletRepository.GetWalletsByCustomerId(ws.CustomerId)
 
 	if err != nil {
 		t.Errorf("error while getting wallet: %v", err)
@@ -56,10 +61,36 @@ func TestGetWalletByCustomerId(t *testing.T) {
 }
 
 func TestGetWalletByWalletId(t *testing.T) {
-	want := entity.Wallet{CustomerId: wCustomerId, WalletId: wWalletId, Balance: 50}
-	got, err := walletRepository.GetWalletById(wWalletId)
+	ws := NewWalletSqlRepositoryTest()
+	want := entity.Wallet{CustomerId: ws.CustomerId, WalletId: ws.WalletId, Balance: 50}
+	got, err := ws.WalletRepository.GetWalletById(ws.WalletId)
 	if err != nil {
 		t.Errorf("error getting wallet by id: %v", err)
+	}
+	if got != want {
+		t.Errorf("got %v want %v", got, want)
+	}
+}
+
+func TestUpdateWallet(t *testing.T) {
+	ws := NewWalletSqlRepositoryTest()
+	want := entity.Wallet{CustomerId: ws.CustomerId, WalletId: ws.WalletId, Balance: 25}
+	tx, err := db.Begin()
+	if err != nil {
+		t.Errorf("error starting transaction: %v", err)
+	}
+	defer tx.Rollback()
+	_, err = ws.WalletRepository.UpdateWallet(tx, want)
+	if err != nil {
+		t.Errorf("error updating wallet: %v", err)
+	}
+	err = tx.Commit()
+	if err != nil {
+		t.Errorf("error committing transaction: %v", err)
+	}
+	got, err := ws.WalletRepository.GetWalletById(ws.WalletId)
+	if err != nil {
+		t.Errorf("error getting wallet: %v", err)
 	}
 	if got != want {
 		t.Errorf("got %v want %v", got, want)

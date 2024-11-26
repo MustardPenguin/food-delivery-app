@@ -10,6 +10,7 @@ import (
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/google/uuid"
 	"github.com/linkedin/goavro"
 	"net/http"
 	"time"
@@ -65,10 +66,11 @@ func eventToPayment(msg interface{}) (entity.Payment, error) {
 
 	payment := entity.Payment{
 		CustomerId: order["customerId"].(string),
+		PaymentId:  uuid.NewString(),
 		WalletId:   order["walletId"].(string),
 		OrderId:    order["orderId"].(string),
 		Amount:     order["totalPrice"].(float64),
-		CreatedAt:  time.Now().UTC(),
+		CreatedAt:  time.Now().UTC().Truncate(time.Second),
 	}
 
 	fmt.Printf("\n payment: %v", payment)

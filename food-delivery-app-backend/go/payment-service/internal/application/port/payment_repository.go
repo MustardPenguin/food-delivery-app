@@ -7,4 +7,5 @@ import (
 
 type PaymentRepository interface {
 	SavePayment(tx *sql.Tx, payment entity.Payment) (entity.Payment, error)
+	GetPaymentById(paymentId string) (entity.Payment, error)
 }
