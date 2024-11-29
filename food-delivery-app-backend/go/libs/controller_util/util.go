@@ -1,4 +1,4 @@
-package api
+package controller_util
 
 import (
 	"encoding/json"

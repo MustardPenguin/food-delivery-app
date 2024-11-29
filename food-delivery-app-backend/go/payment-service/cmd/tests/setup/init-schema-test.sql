@@ -18,3 +18,9 @@ CREATE TABLE payment.payments (
     created_at TIMESTAMP NOT NULL,
     payment_status payment_status NOT NULL
 );
+
+CREATE TABLE payment.payment_created_events (
+    event_id UUID PRIMARY KEY,
+    payload JSONB NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);

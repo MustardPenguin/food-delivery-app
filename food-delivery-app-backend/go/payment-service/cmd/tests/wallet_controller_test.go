@@ -2,7 +2,7 @@ package tests
 
 import (
 	"bytes"
-	common "food-delivery-app-backend/common/api"
+	"food-delivery-app-backend/libs/controller_util"
 	"food-delivery-app-backend/payment-service/internal/api/controller"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
@@ -15,7 +15,7 @@ import (
 
 func convertToJson(t *testing.T, body map[string]interface{}) []byte {
 	t.Helper()
-	j, err := common.ConvertToJson(body)
+	j, err := controller_util.ConvertToJson(body)
 
 	if err != nil {
 		t.Errorf("error while parsing json: %v", err)
@@ -27,7 +27,7 @@ func convertToJson(t *testing.T, body map[string]interface{}) []byte {
 func getBody[T any](t testing.TB, r *http.Response, data T) T {
 	t.Helper()
 
-	d, err := common.GetBody(r, data)
+	d, err := controller_util.GetBody(r, data)
 
 	if err != nil {
 		t.Errorf("error getting response body: %v", err)

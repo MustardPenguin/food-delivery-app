@@ -1,11 +1,11 @@
 package tests
 
 import (
+	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"food-delivery-app-backend/payment-service/internal/infrastructure/repository"
 	"testing"
-	"time"
 )
 
 type PaymentSqlRepositoryTest struct {
@@ -19,7 +19,7 @@ func NewPaymentSqlRepositoryTest() *PaymentSqlRepositoryTest {
 		WalletId:      "090995e5-7d00-4605-95a7-fef83c9c3d3b",
 		OrderId:       "090995e5-7d00-4605-95a7-fef83c9c3d3b",
 		PaymentId:     "c7a0999b-3adf-46f0-a406-747715b0c9ee",
-		CreatedAt:     time.Now().UTC().Truncate(time.Second),
+		CreatedAt:     time_util.GetCurrentTime(),
 		PaymentStatus: "completed",
 		Amount:        49.99,
 	}

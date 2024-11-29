@@ -5,7 +5,8 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
-	common "food-delivery-app-backend/common/api"
+	common "food-delivery-app-backend/libs/controller_util"
+	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
@@ -13,7 +14,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/linkedin/goavro"
 	"net/http"
-	"time"
 )
 
 type MessageHandler struct {
@@ -70,7 +70,7 @@ func eventToPayment(msg interface{}) (entity.Payment, error) {
 		WalletId:   order["walletId"].(string),
 		OrderId:    order["orderId"].(string),
 		Amount:     order["totalPrice"].(float64),
-		CreatedAt:  time.Now().UTC().Truncate(time.Second),
+		CreatedAt:  time_util.GetCurrentTime(),
 	}
 
 	fmt.Printf("\n payment: %v", payment)

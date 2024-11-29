@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
@@ -8,7 +9,6 @@ import (
 	"github.com/google/uuid"
 	"math"
 	"testing"
-	"time"
 )
 
 type PaymentServiceTest struct {
@@ -28,7 +28,7 @@ func NewPaymentServiceTest() *PaymentServiceTest {
 			WalletId:      uuid.NewString(),
 			OrderId:       uuid.NewString(),
 			PaymentId:     uuid.NewString(),
-			CreatedAt:     time.Now().UTC().Truncate(time.Second),
+			CreatedAt:     time_util.GetCurrentTime(),
 			PaymentStatus: "completed",
 			Amount:        49.99},
 	}
