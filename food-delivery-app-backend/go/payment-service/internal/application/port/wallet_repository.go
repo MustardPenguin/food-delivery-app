@@ -6,7 +6,7 @@ import (
 )
 
 type WalletRepository interface {
-	SaveWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error)
+	SaveWallet(wallet entity.Wallet) (entity.Wallet, error)
 	UpdateWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error)
 	GetWalletsByCustomerId(customerId string) ([]entity.Wallet, error)
 	GetWalletById(walletId string) (entity.Wallet, error)

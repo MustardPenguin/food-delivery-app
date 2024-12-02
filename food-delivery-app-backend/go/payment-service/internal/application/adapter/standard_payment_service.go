@@ -9,18 +9,18 @@ import (
 )
 
 type StandardPaymentService struct {
-	WalletRepository  port.WalletRepository
-	PaymentRepository port.PaymentRepository
-	DomainService     domain.PaymentDomainService
-	db                *sql.DB
+	CreatePaymentHandler port.CreatePaymentHandler
+	WalletRepository     port.WalletRepository
+	DomainService        domain.PaymentDomainService
+	db                   *sql.DB
 }
 
 func NewStandardPaymentService(db *sql.DB) *StandardPaymentService {
 	return &StandardPaymentService{
-		WalletRepository:  repository.NewWalletSqlRepository(db),
-		PaymentRepository: repository.NewPaymentSqlRepository(db),
-		DomainService:     domain.NewPaymentDomainServiceImpl(),
-		db:                db,
+		CreatePaymentHandler: repository.NewCreatePaymentSqlHandler(db),
+		WalletRepository:     repository.NewWalletSqlRepository(db),
+		DomainService:        domain.NewPaymentDomainServiceImpl(),
+		db:                   db,
 	}
 }
 
@@ -35,22 +35,7 @@ func (p *StandardPaymentService) PayOrder(payment entity.Payment) error {
 		return err
 	}
 
-	tx, err := p.db.Begin()
-	if err != nil {
-		return err
-	}
-	defer tx.Rollback()
-
-	_, err = p.PaymentRepository.SavePayment(tx, payment)
-	if err != nil {
-		return err
-	}
-	_, err = p.WalletRepository.UpdateWallet(tx, wallet)
-	if err != nil {
-		return err
-	}
-
-	err = tx.Commit()
+	err = p.CreatePaymentHandler.Handle(wallet, payment)
 	if err != nil {
 		return err
 	}
