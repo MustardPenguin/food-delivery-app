@@ -37,20 +37,11 @@ func NewPaymentServiceTest() *PaymentServiceTest {
 func TestPaymentService(t *testing.T) {
 	pt := NewPaymentServiceTest()
 
-	tx, err := db.Begin()
-	if err != nil {
-		t.Errorf("error starting transaction: %v", err)
-	}
-	defer tx.Rollback()
-	saved, err := pt.WalletRepository.SaveWallet(tx, entity.Wallet{
+	saved, err := pt.WalletRepository.SaveWallet(entity.Wallet{
 		CustomerId: pt.Payment.CustomerId,
 		WalletId:   pt.Payment.WalletId,
 		Balance:    75,
 	})
-	err = tx.Commit()
-	if err != nil {
-		t.Errorf("error saving transaction: %v", tx)
-	}
 
 	err = pt.PaymentService.PayOrder(pt.Payment)
 	if err != nil {

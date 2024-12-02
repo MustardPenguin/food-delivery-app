@@ -1,23 +1,26 @@
 package transaction
 
-import "database/sql"
+import (
+	"database/sql"
+	"errors"
+)
 
-func Wrap(db *sql.DB, fn func(tx *sql.Tx) error) error {
+// RunInTx Credits: https://threedots.tech/post/database-transactions-in-go/
+func RunInTx(db *sql.DB, fn func(tx *sql.Tx) error) error {
 	tx, err := db.Begin()
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
 
 	err = fn(tx)
-	if err != nil {
-		return err
+	if err == nil {
+		return tx.Commit()
 	}
 
-	err = tx.Commit()
-	if err != nil {
-		return err
+	rollbackErr := tx.Rollback()
+	if rollbackErr != nil {
+		return errors.Join(err, rollbackErr)
 	}
 
-	return nil
+	return err
 }

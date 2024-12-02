@@ -16,11 +16,11 @@ func NewWalletSqlRepository(db *sql.DB) *WalletSqlRepository {
 	}
 }
 
-func (w *WalletSqlRepository) SaveWallet(tx *sql.Tx, wallet entity.Wallet) (entity.Wallet, error) {
+func (w *WalletSqlRepository) SaveWallet(wallet entity.Wallet) (entity.Wallet, error) {
 
 	query := `INSERT INTO payment.wallets (wallet_id, customer_id, balance) VALUES ($1, $2, $3) RETURNING wallet_id`
 
-	err := tx.QueryRow(query, wallet.WalletId, wallet.CustomerId, wallet.Balance).Scan(&wallet.WalletId)
+	err := w.db.QueryRow(query, wallet.WalletId, wallet.CustomerId, wallet.Balance).Scan(&wallet.WalletId)
 
 	if err != nil {
 		return entity.Wallet{}, err

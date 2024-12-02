@@ -24,21 +24,11 @@ func NewWalletSqlRepositoryTest() *WalletSqlRepositoryTest {
 func TestSaveWallet(t *testing.T) {
 	ws := NewWalletSqlRepositoryTest()
 
-	tx, err := db.Begin()
-	if err != nil {
-		t.Errorf("error starting transaction: %v", tx)
-	}
-	defer tx.Rollback()
-
 	want := entity.Wallet{CustomerId: ws.CustomerId, WalletId: ws.WalletId, Balance: 50}
-	got, err := ws.WalletRepository.SaveWallet(tx, want)
+	got, err := ws.WalletRepository.SaveWallet(want)
 
 	if err != nil {
 		t.Errorf("error while saving wallet: %v", err)
-	}
-	err = tx.Commit()
-	if err != nil {
-		t.Errorf("error commiting transaction: %v", err)
 	}
 
 	if got != want {
