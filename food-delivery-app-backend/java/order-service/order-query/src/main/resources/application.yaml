@@ -1,4 +1,5 @@
 
+# General
 server:
   port: ${PORT:8182}
 
@@ -13,16 +14,11 @@ spring:
   jpa:
     open-in-view: false
 
+# Datasource
 spring.elasticsearch:
     uris: ${ELASTICSEARCH_URIS:http://localhost:9200}
 
-
-#spring.datasource:
-#  url: jdbc:postgresql://${DATABASE_HOST:localhost}:5432/postgres?stringtype=unspecified&currentSchema=order_query
-#  username: ${DATABASE_USER:user}
-#  password: ${DATABASE_PASSWORD:admin}
-#  driver-class-name: org.postgresql.Driver
-
+# Metrics
 management:
   endpoints:
     web:
@@ -32,6 +28,7 @@ management:
     health:
       show-details: always
 
+# Kafka
 kafka-consumer-data:
   bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:19092,localhost:29092,localhost:39092}
   schema-registry-url: ${SCHEMA_REGISTRY_HOST:http://localhost:8081}
@@ -41,6 +38,7 @@ kafka-consumer-data:
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true
 
+# Security
 spring.security:
   oauth2:
     resourceserver:

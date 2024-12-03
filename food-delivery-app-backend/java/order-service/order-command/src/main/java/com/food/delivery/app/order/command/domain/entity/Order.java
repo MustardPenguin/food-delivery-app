@@ -1,6 +1,7 @@
 package com.food.delivery.app.order.command.domain.entity;
 
 import com.food.delivery.app.common.domain.valueobjects.OrderStatus;
+import com.food.delivery.app.order.command.domain.valueobjects.PaymentStatus;
 import com.food.delivery.app.order.command.shared.exceptions.OrderException;
 import lombok.Builder;
 import lombok.Data;
