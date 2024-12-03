@@ -34,6 +34,7 @@ public class OrderPaymentProcessService {
             return;
         }
         Order order = orderMapper.orderFromEntity(entity.get());
+        log.info("Order to process: {}", order);
         if(payment.getPaymentStatus() == PaymentStatus.COMPLETED) {
 //            order.setOrderStatus(OrderStatus.PAID);
         }

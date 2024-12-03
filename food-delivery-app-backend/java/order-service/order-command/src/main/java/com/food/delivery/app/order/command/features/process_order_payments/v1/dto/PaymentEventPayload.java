@@ -10,13 +10,14 @@ import java.util.UUID;
 @Getter
 @Builder
 public class PaymentEventPayload {
-    private UUID eventId;
-    private UUID paymentId;
-    private UUID orderId;
-    private UUID customerId;
-    private UUID walletId;
-    private double amount;
-    private PaymentStatus paymentStatus;
-    private Timestamp createdAt;
-    private String errorMessage;
+    // Starts with capital letter for converting from JSON
+    private UUID EventId;
+    private UUID PaymentId;
+    private UUID OrderId;
+    private UUID CustomerId;
+    private UUID WalletId;
+    private double Amount;
+    private PaymentStatus PaymentStatus;
+    private Timestamp CreatedAt;
+    private String ErrorMessage;
 }
