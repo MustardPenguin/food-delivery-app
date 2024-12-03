@@ -1,13 +1,13 @@
 package tests
 
 import (
-	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
+	"food-delivery-app-backend/payment-service/internal/application/dto"
 	"food-delivery-app-backend/payment-service/internal/application/port"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
+	"food-delivery-app-backend/payment-service/internal/domain/valueobject"
 	"food-delivery-app-backend/payment-service/internal/infrastructure/repository"
 	"github.com/google/uuid"
-	"math"
 	"testing"
 )
 
@@ -15,7 +15,7 @@ type PaymentServiceTest struct {
 	PaymentService    port.PaymentService
 	PaymentRepository port.PaymentRepository
 	WalletRepository  port.WalletRepository
-	Payment           entity.Payment
+	PaymentRequest    dto.PaymentRequest
 }
 
 func NewPaymentServiceTest() *PaymentServiceTest {
@@ -23,44 +23,55 @@ func NewPaymentServiceTest() *PaymentServiceTest {
 		PaymentService:    adapter.NewStandardPaymentService(db),
 		PaymentRepository: repository.NewPaymentSqlRepository(db),
 		WalletRepository:  repository.NewWalletSqlRepository(db),
-		Payment: entity.Payment{
-			CustomerId:    uuid.NewString(),
-			WalletId:      uuid.NewString(),
-			OrderId:       uuid.NewString(),
-			PaymentId:     uuid.NewString(),
-			CreatedAt:     time_util.GetCurrentTime(),
-			PaymentStatus: "completed",
-			Amount:        49.99},
+		PaymentRequest: dto.PaymentRequest{
+			CustomerId: "f12521bd-f580-408b-9e11-5d0d4a4fe785",
+			WalletId:   "552343b7-2e0b-42df-bd24-a947bfc3a401",
+			OrderId:    uuid.NewString(),
+			Amount:     50},
 	}
 }
 
-func TestPaymentService(t *testing.T) {
+func TestSuccessfulPayment(t *testing.T) {
 	pt := NewPaymentServiceTest()
 
-	saved, err := pt.WalletRepository.SaveWallet(entity.Wallet{
-		CustomerId: pt.Payment.CustomerId,
-		WalletId:   pt.Payment.WalletId,
+	savedWallet, err := pt.WalletRepository.SaveWallet(entity.Wallet{
+		CustomerId: pt.PaymentRequest.CustomerId,
+		WalletId:   pt.PaymentRequest.WalletId,
 		Balance:    75,
 	})
 
-	err = pt.PaymentService.PayOrder(pt.Payment)
+	payment, err := pt.PaymentService.PayOrder(pt.PaymentRequest)
 	if err != nil {
 		t.Errorf("error paying for order: %v", err)
 	}
 
-	got, err := pt.PaymentRepository.GetPaymentById(pt.Payment.PaymentId)
-	if got != pt.Payment {
-		t.Errorf("got %v want %v", got, pt.Payment)
+	got, err := pt.PaymentRepository.GetPaymentById(payment.PaymentId)
+	if got != payment {
+		t.Errorf("got %v want %v", got, payment)
 	}
 
-	wallet, err := pt.WalletRepository.GetWalletById(pt.Payment.WalletId)
+	wallet, err := pt.WalletRepository.GetWalletById(pt.PaymentRequest.WalletId)
 	if err != nil {
 		t.Errorf("error getting wallet: %v", err)
 	}
 
-	wantBal := saved.Balance - pt.Payment.Amount
-	wantBal = math.Round(wantBal*100) / 100
-	if wallet.Balance != wantBal {
-		t.Errorf("got %v balance want %v balance", wallet.Balance, wantBal)
+	wantBal := savedWallet.Balance - pt.PaymentRequest.Amount
+	if wantBal != wallet.Balance {
+		t.Errorf("got %v want %v", wallet.Balance, wantBal)
+	}
+}
+
+func TestFailedPayment(t *testing.T) {
+	pt := NewPaymentServiceTest()
+
+	pt.PaymentRequest.Amount = 9999
+	payment, err := pt.PaymentService.PayOrder(pt.PaymentRequest)
+	if err != nil {
+		t.Errorf("error paying for order: %v", err)
+	}
+
+	got, err := pt.PaymentRepository.GetPaymentById(payment.PaymentId)
+	if got.PaymentStatus != valueobject.FAILED {
+		t.Errorf("expected failed payment got %v", got.PaymentStatus)
 	}
 }

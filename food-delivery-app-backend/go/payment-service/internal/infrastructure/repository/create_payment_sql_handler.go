@@ -32,7 +32,11 @@ func (p *CreatePaymentSqlHandler) Handle(wallet entity.Wallet, payment entity.Pa
 		if err != nil {
 			return err
 		}
-		_, err = p.WalletRepository.UpdateWallet(tx, wallet)
+
+		if wallet.WalletId != "" {
+			_, err = p.WalletRepository.UpdateWallet(tx, wallet)
+		}
+
 		if err != nil {
 			return err
 		}

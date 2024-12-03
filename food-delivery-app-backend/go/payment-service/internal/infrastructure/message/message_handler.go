@@ -6,12 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	common "food-delivery-app-backend/libs/controller_util"
-	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
+	"food-delivery-app-backend/payment-service/internal/application/dto"
 	"food-delivery-app-backend/payment-service/internal/application/port"
-	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/google/uuid"
 	"github.com/linkedin/goavro"
 	"net/http"
 )
@@ -38,11 +36,11 @@ func (m *MessageHandler) HandleMessage(msg *kafka.Message, schemaUrl string) err
 		return err
 	}
 
-	payment, err := eventToPayment(val)
+	req, err := eventToPayment(val)
 	if err != nil {
 		return err
 	}
-	err = m.PaymentService.PayOrder(payment)
+	_, err = m.PaymentService.PayOrder(req)
 	if err != nil {
 		return err
 	}
@@ -50,7 +48,7 @@ func (m *MessageHandler) HandleMessage(msg *kafka.Message, schemaUrl string) err
 	return nil
 }
 
-func eventToPayment(msg interface{}) (entity.Payment, error) {
+func eventToPayment(msg interface{}) (dto.PaymentRequest, error) {
 
 	ev := msg.(map[string]interface{})
 	after := ev["after"].(map[string]interface{})
@@ -61,20 +59,18 @@ func eventToPayment(msg interface{}) (entity.Payment, error) {
 	err := json.Unmarshal([]byte(payload), &order)
 	if err != nil {
 		fmt.Printf("error unmarshalling payload: %v", err)
-		return entity.Payment{}, err
+		return dto.PaymentRequest{}, err
 	}
 
-	payment := entity.Payment{
+	req := dto.PaymentRequest{
 		CustomerId: order["customerId"].(string),
-		PaymentId:  uuid.NewString(),
 		WalletId:   order["walletId"].(string),
 		OrderId:    order["orderId"].(string),
 		Amount:     order["totalPrice"].(float64),
-		CreatedAt:  time_util.GetCurrentTime(),
 	}
 
-	fmt.Printf("\n payment: %v", payment)
-	return payment, nil
+	fmt.Printf("\n payment: %v", req)
+	return req, nil
 }
 
 func getSchema(schemaUrl string, id int) (string, error) {
