@@ -32,6 +32,7 @@ func TestSaveEvent(t *testing.T) {
 		Amount:        50,
 		PaymentStatus: "completed",
 		CreatedAt:     time_util.GetCurrentTime(),
+		ErrorMessage:  "",
 	}
 
 	tx, err := db.Begin()

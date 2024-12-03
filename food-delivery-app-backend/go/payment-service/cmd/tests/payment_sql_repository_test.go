@@ -22,6 +22,7 @@ func NewPaymentSqlRepositoryTest() *PaymentSqlRepositoryTest {
 		CreatedAt:     time_util.GetCurrentTime(),
 		PaymentStatus: "completed",
 		Amount:        49.99,
+		ErrorMessage:  "",
 	}
 	return &PaymentSqlRepositoryTest{
 		PaymentRepository: repository.NewPaymentSqlRepository(db),

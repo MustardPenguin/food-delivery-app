@@ -16,7 +16,8 @@ CREATE TABLE payment.payments (
     wallet_id UUID NOT NULL,
     amount NUMERIC(10, 2) NOT NULL,
     created_at TIMESTAMP NOT NULL,
-    payment_status payment_status NOT NULL
+    payment_status payment_status NOT NULL,
+    error_message VARCHAR(1052) NOT NULL
 );
 
 CREATE TABLE payment.payment_created_events (

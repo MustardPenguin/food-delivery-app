@@ -14,4 +14,5 @@ type PaymentEventPayload struct {
 	Amount        float64
 	PaymentStatus valueobject.PaymentStatus
 	CreatedAt     time.Time
+	ErrorMessage  string
 }
