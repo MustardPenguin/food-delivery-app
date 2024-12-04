@@ -1,4 +1,4 @@
-package com.food.delivery.app.order.command.features.process_order_payments.v1.dto;
+package com.food.delivery.app.order.command.domain.event.payload;
 
 import com.food.delivery.app.order.command.domain.valueobjects.PaymentStatus;
 import lombok.Builder;

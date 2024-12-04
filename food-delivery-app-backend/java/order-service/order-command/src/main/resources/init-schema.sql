@@ -11,12 +11,14 @@ CREATE TYPE order_status AS ENUM('PENDING_PAYMENT', 'PAID');
 CREATE TABLE order_command.orders (
     order_id UUID PRIMARY KEY,
     wallet_id UUID NOT NULL,
+    payment_id UUID,
     customer_id UUID NOT NULL,
     restaurant_id UUID NOT NULL,
     ordered_at TIMESTAMP NOT NULL,
     address VARCHAR(255) NOT NULL,
     order_status order_status NOT NULL,
-    total_price NUMERIC(10, 2) NOT NULL
+    total_price NUMERIC(10, 2) NOT NULL,
+    error_message VARCHAR(1024)
 );
 
 CREATE TABLE order_command.order_items (
@@ -30,6 +32,12 @@ CREATE TABLE order_command.order_items (
 );
 
 CREATE TABLE order_command.order_created_events (
+    event_id UUID PRIMARY KEY,
+    payload JSONB NOT NULL,
+    created_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE order_command.order_updated_events (
     event_id UUID PRIMARY KEY,
     payload JSONB NOT NULL,
     created_at TIMESTAMP NOT NULL

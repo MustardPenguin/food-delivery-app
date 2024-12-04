@@ -2,7 +2,7 @@ package com.food.delivery.app.order.command.features.process_order_payments.v1.m
 
 import com.food.delivery.app.common.utility.objectmapper.ObjectMapperUtil;
 import com.food.delivery.app.order.command.features.process_order_payments.v1.dto.PaymentCreatedEvent;
-import com.food.delivery.app.order.command.features.process_order_payments.v1.dto.PaymentEventPayload;
+import com.food.delivery.app.order.command.domain.event.payload.PaymentEventPayload;
 import com.food.delivery.app.order.command.features.process_order_payments.v1.service.OrderPaymentProcessService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
