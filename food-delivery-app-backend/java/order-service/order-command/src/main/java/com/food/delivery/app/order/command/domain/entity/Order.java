@@ -40,11 +40,11 @@ public class Order {
 
     public void validatePayment(PaymentEventPayload payment) {
         switch (payment.getPaymentStatus()) {
-            case COMPLETED -> {
+            case completed -> {
                 this.setPaymentId(payment.getPaymentId());
                 this.setOrderStatus(OrderStatus.PAID);
             }
-            case FAILED, CANCELED, REFUNDED -> {
+            case failed, canceled, refunded-> {
                 this.setErrorMessage(payment.getErrorMessage());
                 this.setOrderStatus(OrderStatus.CANCELLED);
             }

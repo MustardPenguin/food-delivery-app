@@ -1,7 +1,7 @@
 package com.food.delivery.app.order.query.message;
 
 import com.food.delivery.app.order.query.dto.OrderCreatedEvent;
-import com.food.delivery.app.order.query.ports.OrderCreatedEventHandler;
+import com.food.delivery.app.order.query.ports.OrderEventHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,10 @@ import java.util.UUID;
 @Component
 public class OrderCreatedEventKafkaListener {
 
-    private final OrderCreatedEventHandler orderCreatedEventHandler;
+    private final OrderEventHandler orderEventHandler;
 
-    public OrderCreatedEventKafkaListener(OrderCreatedEventHandler orderCreatedEventHandler) {
-        this.orderCreatedEventHandler = orderCreatedEventHandler;
+    public OrderCreatedEventKafkaListener(OrderEventHandler orderEventHandler) {
+        this.orderEventHandler = orderEventHandler;
     }
 
     @KafkaListener(topics = "order_created.order_command.order_created_events", groupId = "order-query")
@@ -28,7 +28,7 @@ public class OrderCreatedEventKafkaListener {
         messages.forEach(message -> {
             order_created.order_command.order_created_events.Value value = message.getAfter();
             log.info("Processing message of event id {} created at {}", value.getEventId(), value.getCreatedAt());
-            orderCreatedEventHandler.handleOrderCreatedEvent(messageToEvent(value));
+            orderEventHandler.handleOrderCreatedEvent(messageToEvent(value));
         });
     }
 

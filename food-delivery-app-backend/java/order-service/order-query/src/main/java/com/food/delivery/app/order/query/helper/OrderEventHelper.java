@@ -32,11 +32,13 @@ public class OrderEventHelper {
                 .orderId(order.getOrderId())
                 .customerId(order.getCustomerId())
                 .restaurantId(order.getRestaurantId())
+                .paymentId(order.getPaymentId())
                 .orderItems(orderItems)
                 .address(order.getAddress())
                 .orderedAt(createdAt)
                 .orderStatus(order.getOrderStatus())
                 .totalPrice(order.getTotalPrice())
+                .errorMessage(order.getErrorMessage())
                 .build();
     }
 }

@@ -11,6 +11,7 @@ echo "Postgres IP Address: $DATABASE_HOSTNAME"
 
 # Delete current connectors
 curl -X DELETE "${DEBEZIUM_API}/order-created-events-connector";
+curl -X DELETE "${DEBEZIUM_API}/order-updated-events-connector"
 curl -X DELETE "${DEBEZIUM_API}/payment-created-events-connector"
 
 # Json config
@@ -35,6 +36,28 @@ order_created_json=$(jq -n \
     }
   }')
 
+order_updated_json=$(jq -n \
+  --arg dbh "$DATABASE_HOSTNAME" \
+  --arg user "$DATABASE_USER" \
+  --arg password "$DATABASE_PASSWORD" \
+  '{
+    "name": "order-updated-events-connector",
+    "config": {
+      "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+      "tasks.max": "1",
+      "database.hostname": $dbh,
+      "database.user": $user,
+      "database.password": $password,
+      "database.dbname": "postgres",
+      "table.include.list": "order_command.order_updated_events",
+      "topic.prefix": "order_updated",
+      "tombstones.on.delete" : "false",
+      "slot.name": "order_updated_slot",
+      "plugin.name": "pgoutput",
+    }
+  }')
+
+
 payment_created_json=$(jq -n \
   --arg dbh "$DATABASE_HOSTNAME" \
   --arg user "$DATABASE_USER" \
@@ -58,6 +81,8 @@ payment_created_json=$(jq -n \
 
 
 curl -X POST -H "Content-Type: application/json" --data "$order_created_json" $DEBEZIUM_API
+sleep $SLEEP_TIME;
+curl -X POST -H "Content-Type: application/json" --data "$order_updated_json" $DEBEZIUM_API
 sleep $SLEEP_TIME;
 curl -X POST -H "Content-Type: application/json" --data "$payment_created_json" $DEBEZIUM_API
 sleep $SLEEP_TIME;

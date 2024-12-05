@@ -8,6 +8,8 @@ import com.food.delivery.app.order.command.features.process_order_payments.v1.se
 import com.food.delivery.app.order.command.shared.repository.order.OrderEntity;
 import com.food.delivery.app.order.command.shared.repository.order.OrderItemEntity;
 import com.food.delivery.app.order.command.shared.repository.order.OrderJpaRepository;
+import com.food.delivery.app.order.command.shared.repository.order_updated_event.OrderUpdatedEventEntity;
+import com.food.delivery.app.order.command.shared.repository.order_updated_event.OrderUpdatedEventJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +31,8 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProcessOrderPaymentsTest extends BaseTest {
 
-//    @MockBean
+    @Autowired
+    private OrderUpdatedEventJpaRepository orderUpdatedEventJpaRepository;
     @Autowired
     private OrderJpaRepository orderJpaRepository;
     @Autowired
@@ -63,13 +66,13 @@ public class ProcessOrderPaymentsTest extends BaseTest {
 
         PaymentEventPayload payment = PaymentEventPayload.builder()
                 .CreatedAt(Timestamp.from(Instant.now()))
-                .PaymentStatus(PaymentStatus.COMPLETED)
+                .PaymentStatus(PaymentStatus.completed)
                 .CustomerId(UUID.randomUUID())
                 .PaymentId(UUID.randomUUID())
                 .WalletId(UUID.randomUUID())
                 .OrderId(order.getOrderId())
                 .EventId(UUID.randomUUID())
-                .ErrorMessage("")
+                .ErrorMessage("test")
                 .Amount(50)
                 .build();
 
@@ -79,5 +82,9 @@ public class ProcessOrderPaymentsTest extends BaseTest {
         OrderEntity got = optOrder.get();
         assertEquals(OrderStatus.PAID, got.getOrderStatus());
         assertEquals(payment.getPaymentId(), got.getPaymentId());
+        assertEquals("test", payment.getErrorMessage());
+
+        List<OrderUpdatedEventEntity> updatedEvents = orderUpdatedEventJpaRepository.findAll();
+        assertEquals(1, updatedEvents.size());
     }
 }
