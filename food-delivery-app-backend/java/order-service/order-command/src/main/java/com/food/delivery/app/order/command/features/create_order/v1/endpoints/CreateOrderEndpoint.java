@@ -1,4 +1,4 @@
-package com.food.delivery.app.command.features.create_order.v1.endpoints;
+package com.food.delivery.app.order.command.features.create_order.v1.endpoints;
 
 import com.food.delivery.app.common.utility.security.SecurityContextUtil;
 import com.food.delivery.app.order.command.domain.entity.Order;

@@ -28,5 +28,5 @@ CREATE TABLE payment.payment_created_events (
 );
 
 INSERT INTO payment.wallets (wallet_id, customer_id, balance) VALUES
-('f86b0456-0a1a-4c90-8f48-136541fb048d', 'a3001d04-22ab-4ce3-a220-4a8ea2503f8c', 1000
+('a9e80b1a-50e0-44c3-9cb5-ae2807f9538f', 'a3001d04-22ab-4ce3-a220-4a8ea2503f8c', 1000
 )

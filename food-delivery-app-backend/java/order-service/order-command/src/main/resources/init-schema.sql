@@ -6,7 +6,7 @@ CREATE SCHEMA order_command;
 SET search_path TO order_command;
 
 DROP TYPE IF EXISTS order_status;
-CREATE TYPE order_status AS ENUM('PENDING_PAYMENT', 'PAID');
+CREATE TYPE order_status AS ENUM('PENDING_PAYMENT', 'PAID', 'CANCELED', 'CANCELLING');
 
 CREATE TABLE order_command.orders (
     order_id UUID PRIMARY KEY,

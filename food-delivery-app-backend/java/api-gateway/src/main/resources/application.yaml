@@ -59,11 +59,28 @@ spring.cloud:
         uri: ${ORDER_COMMAND_HOST:http://localhost:8181}
         predicates:
           - Path=/api/v1/orders/**
+          - Method=POST
         filters:
           - name: CircuitBreaker
             args:
               name: CircuitBreakerInstance
-              fallbackUri: forward:/fallback/order
+              fallbackUri: forward:/fallback/order-command
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 2
+              redis-rate-limiter.burstCapacity: 4
+              redis-rate-limiter.requestedTokens: 1
+              key-resolver: "#{@KeyResolverConfig}"
+      - id: order-query
+        uri: ${ORDER_QUERY_HOST:http://localhost:8182}
+        predicates:
+          - Path=/api/v1/orders/**
+          - Method=GET
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/order-query
           - name: RequestRateLimiter
             args:
               redis-rate-limiter.replenishRate: 2

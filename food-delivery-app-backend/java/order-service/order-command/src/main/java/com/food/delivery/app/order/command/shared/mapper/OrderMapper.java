@@ -93,12 +93,14 @@ public class OrderMapper {
                 .orderId(order.getOrderId())
                 .customerId(order.getCustomerId())
                 .restaurantId(order.getRestaurantId())
+                .paymentId(order.getPaymentId())
                 .walletId(order.getWalletId())
                 .orderItems(orderItems)
                 .address(order.getAddress())
                 .orderedAt(order.getOrderedAt())
                 .orderStatus(order.getOrderStatus())
                 .totalPrice(order.getTotalPrice())
+                .errorMessage(order.getErrorMessage())
                 .build();
     }
 }

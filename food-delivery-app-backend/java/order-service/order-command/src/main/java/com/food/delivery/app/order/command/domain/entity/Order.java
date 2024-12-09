@@ -46,7 +46,7 @@ public class Order {
             }
             case failed, canceled, refunded-> {
                 this.setErrorMessage(payment.getErrorMessage());
-                this.setOrderStatus(OrderStatus.CANCELLED);
+                this.setOrderStatus(OrderStatus.CANCELED);
             }
         }
     }
