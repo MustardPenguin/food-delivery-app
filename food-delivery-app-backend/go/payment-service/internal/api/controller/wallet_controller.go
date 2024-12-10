@@ -55,13 +55,33 @@ func (wc *WalletController) CreateWallet(w http.ResponseWriter, r *http.Request)
 
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
 	wallet, err := wc.WalletService.CreateWallet(data, sub)
 	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	err = json.NewEncoder(w).Encode(wallet)
+	if err != nil {
+		str := fmt.Sprintf("error encoding json for response: %v", err)
+		http.Error(w, str, http.StatusInternalServerError)
+	}
+}
+
+func (wc *WalletController) GetWalletById(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+	wc.GetWalletByIdHandle(w, id)
+}
+
+func (wc *WalletController) GetWalletByIdHandle(w http.ResponseWriter, id string) {
+	wallet, err := wc.WalletService.GetWalletById(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 	err = json.NewEncoder(w).Encode(wallet)
 	if err != nil {
 		str := fmt.Sprintf("error encoding json for response: %v", err)

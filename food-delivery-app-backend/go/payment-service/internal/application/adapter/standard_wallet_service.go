@@ -41,3 +41,11 @@ func (w *StandardWalletService) CreateWallet(command dto.CreateWalletCommand, cu
 
 	return response, nil
 }
+
+func (w *StandardWalletService) GetWalletById(walletId string) (entity.Wallet, error) {
+	wallet, err := w.WalletRepository.GetWalletById(walletId)
+	if err != nil {
+		return entity.Wallet{}, err
+	}
+	return wallet, nil
+}

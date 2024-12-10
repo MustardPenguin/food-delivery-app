@@ -7,4 +7,5 @@ import (
 
 type WalletService interface {
 	CreateWallet(command dto.CreateWalletCommand, customerId string) (entity.Wallet, error)
+	GetWalletById(walletId string) (entity.Wallet, error)
 }

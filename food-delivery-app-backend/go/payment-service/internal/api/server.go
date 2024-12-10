@@ -24,4 +24,5 @@ func setupController(db *sql.DB) {
 	wc := controller.NewWalletController(db)
 
 	http.HandleFunc("POST /api/v1/wallets", wc.CreateWallet)
+	http.HandleFunc("GET /api/v1/wallets/{id}", wc.GetWalletById)
 }
