@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"food-delivery-app-backend/payment-service/internal/api/controller"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 )
@@ -25,4 +26,5 @@ func setupController(db *sql.DB) {
 
 	http.HandleFunc("POST /api/v1/wallets", wc.CreateWallet)
 	http.HandleFunc("GET /api/v1/wallets/{id}", wc.GetWalletById)
+	http.Handle("/api/metrics", promhttp.Handler())
 }

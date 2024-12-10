@@ -2,40 +2,39 @@ package message
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"log"
+	"github.com/rs/zerolog"
 )
 
-func StartConsumers(config *kafka.ConfigMap, topics []string, schemaUrl string, db *sql.DB) {
+func StartConsumers(config *kafka.ConfigMap, topics []string, schemaUrl string, db *sql.DB, log zerolog.Logger) {
 
 	consumer, err := kafka.NewConsumer(config)
 	if err != nil {
-		log.Fatalf("err starting consumer: %v", err)
+		log.Fatal().Msgf("err starting consumer: %v", err)
 	}
 
 	err = consumer.SubscribeTopics(topics, nil)
 	if err != nil {
-		log.Fatalf("err subscribing to topics: %v", err)
+		log.Fatal().Msgf("err subscribing to topics: %v", err)
 	}
-	fmt.Printf("successfully started consumer, subscribed to topics: %v", topics)
+	log.Info().Msgf("successfully started consumer, subscribed to topics: %v", topics)
 
-	handleConsumer(consumer, schemaUrl, db)
+	handleConsumer(consumer, schemaUrl, db, log)
 }
 
-func handleConsumer(consumer *kafka.Consumer, schemaUrl string, db *sql.DB) {
-	handler := NewMessageHandler(db)
+func handleConsumer(consumer *kafka.Consumer, schemaUrl string, db *sql.DB, log zerolog.Logger) {
+	handler := NewMessageHandler(db, log)
 	for {
 		msg, err := consumer.ReadMessage(-1)
 
 		if err != nil {
-			fmt.Printf("consumer err: %v", err)
+			log.Error().Msgf("consumer err: %v", err)
 			continue
 		}
 
 		err = handler.HandleMessage(msg, schemaUrl)
 		if err != nil {
-			log.Printf("error handling message: %v", err)
+			log.Error().Msgf("error handling message: %v", err)
 			continue
 		}
 	}
