@@ -25,7 +25,7 @@ public class BaseTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withUrlParam("stringtype", "unspecified")
             .withUrlParam("currentSchema", "order-command")
-            .withInitScript("init-schema.sql")
+//            .withInitScript("init-schema-test.sql")
             .withReuse(true);
 
     @DynamicPropertySource
@@ -34,6 +34,7 @@ public class BaseTest {
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
         registry.add("spring.datasource.hikari.max-life", () -> 600000);
+        registry.add("spring.sql.init.schema-locations", () -> "classpath:init-schema-test.sql");
     }
 
     @BeforeAll

@@ -21,6 +21,7 @@ public class Order {
     private UUID restaurantId;
     private UUID walletId;
     private UUID paymentId;
+    private UUID driverId;
 
     List<OrderItem> orderItems;
     private String address;
@@ -49,5 +50,15 @@ public class Order {
                 this.setOrderStatus(OrderStatus.CANCELED);
             }
         }
+    }
+
+    public void acceptOrderDelivery(UUID driverID) {
+        if(this.driverId != null) {
+            throw new OrderException("Order is already taken!");
+        }
+        if(this.getOrderStatus() != OrderStatus.PAID) {
+            throw new OrderException("Order is not paid!");
+        }
+        this.driverId = driverID;
     }
 }

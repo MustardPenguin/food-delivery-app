@@ -43,3 +43,14 @@ CREATE TABLE order_command.order_updated_events (
     payload JSONB NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
+
+INSERT INTO order_command.orders (order_id, wallet_id, payment_id, customer_id, restaurant_id, ordered_at, address, order_status, total_price, error_message) VALUES
+(
+    'c96b37e9-d1ce-4293-9033-e3789a44b49b', '9418cf1b-83d7-4c6c-83da-b26216d35e0d', 'a126ca22-b049-4d19-851e-5596f1cfe400', 'b10e3b87-724a-47f6-946f-5b76286a61fd', 'a698f7a3-e107-49ce-8b83-ce0d6f8b08ec',
+    '2023-04-10 10:39:37', 'test address', 'PAID', 23.99, ''
+);
+
+INSERT INTO order_command.order_items (order_item_id, product_id, quantity, price, order_id) VALUES
+(
+    'caca25f7-e01d-4471-9914-caaa146e9ac3', '02fa7a29-abfd-40f9-8923-1161e43a3a2f', 4, 23.99, 'c96b37e9-d1ce-4293-9033-e3789a44b49b'
+);

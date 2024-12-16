@@ -24,8 +24,9 @@ public class OrderEntity {
     private UUID restaurantId;
     private UUID walletId;
     private UUID paymentId;
+    private UUID driverId;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.EAGER)
     List<OrderItemEntity> orderItems;
     private String address;
     private LocalDateTime orderedAt;

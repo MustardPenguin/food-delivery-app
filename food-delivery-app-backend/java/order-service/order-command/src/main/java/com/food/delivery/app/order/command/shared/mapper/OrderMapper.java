@@ -25,6 +25,7 @@ public class OrderMapper {
                 .orderedAt(order.getOrderedAt())
                 .paymentId(order.getPaymentId())
                 .walletId(order.getWalletId())
+                .driverId(order.getDriverId())
                 .address(order.getAddress())
                 .orderId(order.getOrderId())
                 .build();
@@ -45,6 +46,7 @@ public class OrderMapper {
                 .orderedAt(orderEntity.getOrderedAt())
                 .paymentId(orderEntity.getPaymentId())
                 .walletId(orderEntity.getWalletId())
+                .driverId(orderEntity.getDriverId())
                 .orderId(orderEntity.getOrderId())
                 .address(orderEntity.getAddress())
                 .build();
