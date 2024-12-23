@@ -2,10 +2,10 @@ package repository
 
 import (
 	"database/sql"
+	"food-delivery-app-backend/libs/time_util"
 	"food-delivery-app-backend/payment-service/internal/domain/entity"
 	"food-delivery-app-backend/payment-service/internal/domain/valueobject"
 	"strings"
-	"time"
 )
 
 type PaymentSqlRepository struct {
@@ -45,7 +45,7 @@ func (p *PaymentSqlRepository) GetPaymentById(paymentId string) (entity.Payment,
 		return entity.Payment{}, err
 	}
 	payment.PaymentStatus = valueobject.PaymentStatus(strings.ToLower(string(payment.PaymentStatus)))
-	payment.CreatedAt = payment.CreatedAt.Truncate(time.Second).UTC()
+	payment.CreatedAt = time_util.Truncate(payment.CreatedAt)
 
 	return payment, nil
 }
