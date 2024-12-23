@@ -13,7 +13,6 @@ import (
 var db *sql.DB
 
 func TestMain(m *testing.M) {
-
 	ctx := context.Background()
 	pgContainer := db_util.SetupDbContainer(ctx)
 	database := db_util.ConnectToTestDb(pgContainer, ctx)

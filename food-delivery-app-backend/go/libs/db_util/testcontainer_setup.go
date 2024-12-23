@@ -1,21 +1,19 @@
-package setup
+package db_util
 
 import (
 	"context"
 	"database/sql"
-	_ "github.com/lib/pq"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
 	"log"
-	"os"
 	"time"
 )
 
-var dbUser string = "user"
-var dbPassword string = "password"
+func SetupDbContainer(ctx context.Context) *postgres.PostgresContainer {
 
-func setupDbContainer(ctx context.Context) *postgres.PostgresContainer {
+	dbUser := "user"
+	dbPassword := "password"
 
 	postgresContainer, err := postgres.Run(
 		ctx,
@@ -36,7 +34,7 @@ func setupDbContainer(ctx context.Context) *postgres.PostgresContainer {
 	return postgresContainer
 }
 
-func connectToDb(pgContainer *postgres.PostgresContainer, ctx context.Context) *sql.DB {
+func ConnectToTestDb(pgContainer *postgres.PostgresContainer, ctx context.Context) *sql.DB {
 
 	_, err := pgContainer.Host(ctx)
 
@@ -57,23 +55,11 @@ func connectToDb(pgContainer *postgres.PostgresContainer, ctx context.Context) *
 	return db
 }
 
-func executeScript(db *sql.DB) {
-	script, err := os.ReadFile("./setup/init-schema-test.sql")
-	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
-	}
-
-	_, err = db.Exec(string(script))
-	if err != nil {
-		log.Fatalf("Error running script: %v", err)
-	}
-}
-
-func Startup(ctx context.Context) (*postgres.PostgresContainer, *sql.DB) {
-
-	pgContainer := setupDbContainer(ctx)
-	db := connectToDb(pgContainer, ctx)
-	executeScript(db)
-
-	return pgContainer, db
-}
+//func Startup(ctx context.Context) (*postgres.PostgresContainer, *sql.DB) {
+//
+//	pgContainer := setupDbContainer(ctx)
+//	db := connectToDb(pgContainer, ctx)
+//	executeScript(db)
+//
+//	return pgContainer, db
+//}

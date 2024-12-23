@@ -1,8 +1,7 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
+	"food-delivery-app-backend/libs/db_util"
 	"food-delivery-app-backend/payment-service/internal/api"
 	"food-delivery-app-backend/payment-service/internal/infrastructure/message"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
@@ -33,7 +32,9 @@ func main() {
 		"auto.offset.reset": "earliest",
 	}
 
-	db := initConnection()
+	db := db_util.InitConnection()
+	db_util.ExecuteScript(db, "./script/init-schema-test.sql")
+
 	orderCreated := os.Getenv("ORDER_CREATED_EVENT_TOPIC")
 	topics := []string{orderCreated}
 
@@ -60,35 +61,4 @@ func initLogging() zerolog.Logger {
 		Timestamp().Str("golang-service", "payment-service").Logger()
 	logger.Info().Msg("successfully connected to logstash host for log aggregation")
 	return logger
-}
-
-func initConnection() *sql.DB {
-	// Connect to database
-	dbHost := os.Getenv("DATABASE_HOST")
-	dbUser := os.Getenv("POSTGRES_USER")
-	dbPort := os.Getenv("DATABASE_PORT")
-	dbPassword := os.Getenv("POSTGRES_PASSWORD")
-
-	dbUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		dbUser, dbPassword, dbHost, dbPort, "postgres")
-
-	db, err := sql.Open("postgres", dbUrl)
-	if err != nil {
-		log.Fatalf("Error connecting to database: %v", err)
-	}
-
-	runScript(db, "./script/init-schema.sql")
-	return db
-}
-
-func runScript(db *sql.DB, path string) {
-	script, err := os.ReadFile(path)
-	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
-	}
-
-	_, err = db.Exec(string(script))
-	if err != nil {
-		log.Fatalf("Error running script: %v", err)
-	}
 }
