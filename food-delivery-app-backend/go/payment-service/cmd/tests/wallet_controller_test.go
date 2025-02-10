@@ -26,7 +26,7 @@ func convertToJson(t *testing.T, body map[string]interface{}) []byte {
 func getBody[T any](t testing.TB, r *http.Response, data T) T {
 	t.Helper()
 
-	d, err := controller_util.GetBody(r, data)
+	d, err := controller_util.GetResponseBody(r, data)
 
 	if err != nil {
 		t.Errorf("error getting response body: %v", err)

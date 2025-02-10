@@ -8,7 +8,7 @@ scrape_configs:
       insecure_skip_verify: true
     oauth2:
       client_id: 'metrics'
-      client_secret: '6ZJFi6udExYt7BUq9gjuDul1CzQxnxM4'
+      client_secret: 'MNXsOC8KtHii6MNhrA4M1YMioJMIO1OV'
       token_url: 'http://172.17.0.1:9090/realms/food-delivery-app/protocol/openid-connect/token'
     static_configs:
       - targets: ['172.17.0.1:8080']

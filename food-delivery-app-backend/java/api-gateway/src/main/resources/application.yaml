@@ -117,6 +117,21 @@ spring.cloud:
               redis-rate-limiter.burstCapacity: 4
               redis-rate-limiter.requestedTokens: 1
               key-resolver: "#{@KeyResolverConfig}"
+      - id: message-service
+        uri: ${MESSAGE_SERVICE_HOST:http://localhost:8186}
+        predicates:
+          - Path=/api/v1/messages/**
+        filters:
+          - name: CircuitBreaker
+            args:
+              name: CircuitBreakerInstance
+              fallbackUri: forward:/fallback/restaurants
+          - name: RequestRateLimiter
+            args:
+              redis-rate-limiter.replenishRate: 2
+              redis-rate-limiter.burstCapacity: 4
+              redis-rate-limiter.requestedTokens: 1
+              key-resolver: "#{@KeyResolverConfig}"
       - id: any
         uri: http://localhost:8181
         predicates:
@@ -140,6 +155,6 @@ spring.security.oauth2:
       api-gateway:
         provider: keycloak
         client-id: api-gateway
-        client-secret: ${CLIENT_SECRET:deVQ5yToDYJ9KQTgUZ1FKrlAfv1a7Dl1}
+        client-secret: ${CLIENT_SECRET:74UJ7UnfpmSEFijL8X8PYP14q5A9FNN5}
         authorization-grant-type: authorization_code
         scope: openid

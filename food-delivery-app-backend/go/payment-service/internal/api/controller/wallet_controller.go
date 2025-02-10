@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"food-delivery-app-backend/payment-service/internal/api/helper"
+	"food-delivery-app-backend/libs/jwt_util"
 	"food-delivery-app-backend/payment-service/internal/application/adapter"
 	"food-delivery-app-backend/payment-service/internal/application/dto"
 	"food-delivery-app-backend/payment-service/internal/application/port"
@@ -14,13 +14,13 @@ import (
 
 type WalletController struct {
 	WalletService port.WalletService
-	JwtHelper     helper.JwtHelper
+	JwtHelper     jwt_util.JwtHelper
 }
 
 func NewWalletController(db *sql.DB) *WalletController {
 	return &WalletController{
 		WalletService: adapter.NewStandardWalletService(db),
-		JwtHelper:     helper.NewJwtHelperImpl(),
+		JwtHelper:     jwt_util.NewJwtHelperImpl(),
 	}
 }
 

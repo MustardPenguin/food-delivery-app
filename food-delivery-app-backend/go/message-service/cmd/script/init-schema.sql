@@ -7,5 +7,5 @@ CREATE TABLE message.messages (
     author_id UUID NOT NULL,
     order_id UUID NOT NULL,
     content VARCHAR(1024) NOT NULL,
-    date TIMESTAMP NOT NULL
+    sent_at TIMESTAMP NOT NULL
 );

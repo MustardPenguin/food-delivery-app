@@ -90,7 +90,7 @@ func getSchema(schemaUrl string, id int) (string, error) {
 	defer res.Body.Close()
 
 	var data map[string]interface{}
-	schema, err := common.GetBody(res, data)
+	schema, err := common.GetResponseBody(res, data)
 	if err != nil {
 		return "", err
 	}
